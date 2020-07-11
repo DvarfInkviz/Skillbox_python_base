@@ -24,6 +24,8 @@ print(f'Рост отца - {my_family_height[0][1]} см')
 
 # Выведите на консоль общий рост вашей семьи как сумму ростов всех членов
 #   Общий рост моей семьи - ХХ см
+# TODO Вычислите общий рост семьи в одном выражении вида:
+#  result = a + b + c ...
 all_height = my_family_height[0][1]
 all_height += my_family_height[1][1]
 all_height += my_family_height[2][1]

@@ -42,8 +42,14 @@ pocket_universe_songs = {
 # Распечатайте общее время звучания трех песен: 'On Track', 'To the Sea' и 'Beyond Mirrors'
 #   А другие три песни звучат приблизительно ХХХ минут
 
-yellow_songs = round(pocket_universe_songs['On Track'] + pocket_universe_songs['To the Sea'] + pocket_universe_songs['Beyond Mirrors'])
+yellow_songs = round(
+    pocket_universe_songs['On Track']
+    + pocket_universe_songs['To the Sea']
+    + pocket_universe_songs['Beyond Mirrors']
+)
 print(f'А другие три песни звучат приблизительно {yellow_songs} минут')
 
 # Обратите внимание, что делать много вычислений внутри print() - плохой стиль.
 # Лучше заранее вычислить необходимое, а затем в print(xxx, yyy, zzz)
+
+# Зачёт!
