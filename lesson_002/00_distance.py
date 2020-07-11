@@ -33,6 +33,4 @@ distances['Paris']['London'] = prs_lnd
 
 print(distances)
 
-
-
-
+# Зачёт!
