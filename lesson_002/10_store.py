@@ -52,25 +52,62 @@ print('Лампа -', lamps_quantity, 'шт, стоимость', lamps_cost, '�
 # WARNING для знающих циклы: БЕЗ циклов. Да, с переменными; да, неэффективно; да, копипаста.
 # Это задание на ручное вычисление - что бы потом понять как работают циклы и насколько с ними проще жить.
 
-table_qnt = store[goods['Стол']][0]['quantity']
-table_cost = table_qnt * store[goods['Стол']][0]['price']
-table_qnt += store[goods['Стол']][1]['quantity']
-table_cost += store[goods['Стол']][1]['quantity'] * store[goods['Стол']][1]['price']
-print('Стол -', table_qnt, 'шт, стоимость', table_cost, 'руб')
+table_code = goods['Стол']
+table_item = store[table_code][0]
+table_quantity = table_item['quantity']
+table_price = table_item['price']
+table_cost = table_quantity * table_price
+table_item = store[table_code][1]
+table_quantity += table_item['quantity']
+table_price = table_item['price']
+table_cost += table_item['quantity'] * table_price
+print('Стол -', table_quantity, 'шт, стоимость', table_cost, 'руб')
 
-sofa_qnt = store[goods['Диван']][0]['quantity']
-sofa_cost = sofa_qnt * store[goods['Диван']][0]['price']
-sofa_qnt += store[goods['Диван']][1]['quantity']
-sofa_cost += store[goods['Диван']][1]['quantity'] * store[goods['Диван']][1]['price']
-print('Диван -', sofa_qnt, 'шт, стоимость', sofa_cost, 'руб')
+# table_qnt = store[goods['Стол']][0]['quantity']
+# table_cost = table_qnt * store[goods['Стол']][0]['price']
+# table_qnt += store[goods['Стол']][1]['quantity']
+# table_cost += store[goods['Стол']][1]['quantity'] * store[goods['Стол']][1]['price']
+# print('Стол -', table_qnt, 'шт, стоимость', table_cost, 'руб')
 
-chair_qnt = store[goods['Стул']][0]['quantity']
-chair_cost = chair_qnt * store[goods['Стул']][0]['price']
-chair_qnt += store[goods['Стул']][1]['quantity']
-chair_qnt += store[goods['Стул']][2]['quantity']
-chair_cost += store[goods['Стул']][1]['quantity'] * store[goods['Стул']][1]['price']
-chair_cost += store[goods['Стул']][2]['quantity'] * store[goods['Стул']][2]['price']
-print('Стул -', chair_qnt, 'шт, стоимость', chair_cost, 'руб')
+sofa_code = goods['Диван']
+sofa_item = store[sofa_code][0]
+sofa_quantity = sofa_item['quantity']
+sofa_price = sofa_item['price']
+sofa_cost = sofa_quantity * sofa_price
+sofa_item = store[sofa_code][1]
+sofa_quantity += sofa_item['quantity']
+sofa_price = sofa_item['price']
+sofa_cost += sofa_item['quantity'] * sofa_price
+print('Диван -', sofa_quantity, 'шт, стоимость', sofa_cost, 'руб')
+
+# sofa_qnt = store[goods['Диван']][0]['quantity']
+# sofa_cost = sofa_qnt * store[goods['Диван']][0]['price']
+# sofa_qnt += store[goods['Диван']][1]['quantity']
+# sofa_cost += store[goods['Диван']][1]['quantity'] * store[goods['Диван']][1]['price']
+# print('Диван -', sofa_qnt, 'шт, стоимость', sofa_cost, 'руб')
+
+chair_code = goods['Стул']
+chair_item = store[chair_code][0]
+chair_quantity = chair_item['quantity']
+chair_price = chair_item['price']
+chair_cost = chair_quantity * chair_price
+chair_item = store[chair_code][1]
+chair_quantity += chair_item['quantity']
+chair_price = chair_item['price']
+chair_cost += chair_item['quantity'] * chair_price
+chair_item = store[chair_code][2]
+chair_quantity += chair_item['quantity']
+chair_price = chair_item['price']
+chair_cost += chair_item['quantity'] * chair_price
+print('Стул -', chair_quantity, 'шт, стоимость', chair_cost, 'руб')
+
+# chair_qnt = store[goods['Стул']][0]['quantity']
+# chair_cost = chair_qnt * store[goods['Стул']][0]['price']
+# chair_qnt += store[goods['Стул']][1]['quantity']
+# chair_qnt += store[goods['Стул']][2]['quantity']
+# chair_cost += store[goods['Стул']][1]['quantity'] * store[goods['Стул']][1]['price']
+# chair_cost += store[goods['Стул']][2]['quantity'] * store[goods['Стул']][2]['price']
+# print('Стул -', chair_qnt, 'шт, стоимость', chair_cost, 'руб')
 
 ##########################################################################################
 # ВНИМАНИЕ! После того как __ВСЯ__ домашняя работа сделана и запушена на сервер,         #
@@ -79,15 +116,3 @@ print('Стул -', chair_qnt, 'шт, стоимость', chair_cost, 'руб')
 # Как оформить попытку сдачи смотрите видео - https://youtu.be/qVpN0L-C3LU               #
 ##########################################################################################
 
-# TODO Задание работает. Отлично. В примере с лампами было показано два варианта выполнения задания.
-#  Вы выбрали первый способ. На первый взгляд он кажется проще и компактней.
-#  Давайте разберём, почему он не очень хорош, вернее очень нехорош:
-#  - Такой код сложнее прочитать и понять. В процессе жизни программы её части гораздо чаще прочитывают, чем меняют.
-#   Поэтому потратив немного больше времени при написании, вы, затем значительно сэкономите его поддерживая код
-#  - Лёгкость изменения. Представьте себе, что в словаре goods поменялось название диван на софа. Посчитайте
-#   сколько мест в программе вам нужно будет исправить?
-#  - Большое количество скопированного кода. Довольно часто студенты ошибаются с индексами или названиями товаров
-#   при копировании частей кода.
-#  - Сложность отладки. Если программу расписать более подробно будет удобнее проверять полученные значения
-#   в процессе отладки.
-# TODO Нужно переписать программу по второму примеру, показанному для ламп.
