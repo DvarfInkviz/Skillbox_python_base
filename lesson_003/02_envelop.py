@@ -44,13 +44,13 @@ else:
 # Определить, пройдет ли кирпич через отверстие (грани кирпича параллельны сторонам отверстия)
 
 hole_x, hole_y = 8, 9
-brick_x, brick_y, brick_z = 11, 10, 2
+# brick_x, brick_y, brick_z = 11, 10, 2
 # brick_x, brick_y, brick_z = 11, 2, 10
 # brick_x, brick_y, brick_z = 10, 11, 2
 # brick_x, brick_y, brick_z = 10, 2, 11
 # brick_x, brick_y, brick_z = 2, 10, 11
 # brick_x, brick_y, brick_z = 2, 11, 10
-# brick_x, brick_y, brick_z = 3, 5, 6
+brick_x, brick_y, brick_z = 3, 5, 6
 # brick_x, brick_y, brick_z = 3, 6, 5
 # brick_x, brick_y, brick_z = 6, 3, 5
 # brick_x, brick_y, brick_z = 6, 5, 3
@@ -64,35 +64,66 @@ brick_x, brick_y, brick_z = 11, 10, 2
 # brick_x, brick_y, brick_z = 3, 11, 6
 # (просто раскоментировать нужную строку и проверить свой код)
 
-if brick_x <= hole_x:  # x-y
-    if brick_y <= hole_y:  # x-y
-        print('ДА')
-    elif brick_y <= hole_x:  # y-x
-        if brick_x <= hole_y:  # y-x
-            print('ДА')
-        elif brick_z <= hole_y:  # y-z
-            print('ДА')
-        else:
-            print('НЕТ')
-    elif brick_z <= hole_y:  # x-z
-        print('ДА')
-    elif brick_z <= hole_x:  # z-x
-        if brick_x <= hole_y:  # z-x
-            print('ДА')
-        else:
-            print('НЕТ')
-    else:
-        print('НЕТ')
-elif brick_x <= hole_y:  # y-x
-    if brick_y <= hole_x:  # y-x
-        print('ДА')
-    elif brick_z <= hole_x:  # z-x
-        print('ДА')
-    else:
-        pass
-elif brick_z <= hole_x:  #
-    pass
-elif brick_z <= hole_y:
-    pass
+# TODO попытка написать решение с применением одного условия в if
+# TODO получается очень громоздким
+
+# if brick_x <= hole_x:  # x-y
+#     if brick_y <= hole_y:  # x-y
+#         print('ДА')
+#     elif brick_y <= hole_x:  # y-x
+#         if brick_x <= hole_y:  # y-x
+#             print('ДА')
+#         elif brick_z <= hole_y:  # y-z
+#             print('ДА')
+#         else:
+#             print('НЕТ')
+#     elif brick_z <= hole_y:  # x-z
+#         print('ДА')
+#     elif brick_z <= hole_x:  # z-x
+#         if brick_x <= hole_y:  # z-x
+#             print('ДА')
+#         else:
+#             print('НЕТ')
+#     else:
+#         print('НЕТ')
+# elif brick_x <= hole_y:  # y-x
+#     if brick_y <= hole_x:  # y-x
+#         print('ДА')
+#     elif brick_z <= hole_x:  # z-x
+#         print('ДА')
+#     else:
+#         pass
+# elif brick_z <= hole_x:  #
+#     pass
+# elif brick_z <= hole_y:
+#     pass
+# else:
+#     print('НЕТ')
+
+# TODO решение с несколькими условиями в if
+# TODO условий много, но если разложить нашу задачу на возможные варианты ее решения,
+# TODO то они оказываются легки для понимания
+# TODO    ____
+# TODO   |    | hole_y
+# TODO   |____|
+# TODO    hole_x
+# TODO возможные варианты расположения кирпича (x = brick_x, y = brick_y, z = brick_z)
+# TODO    ____         ____
+# TODO   |___| y  or  |___| x
+# TODO     x            y
+# TODO    ____         ____
+# TODO   |___| x  or  |___| z
+# TODO     z            x
+# TODO    ____         ____
+# TODO   |___| y  or  |___| z
+# TODO     z            y
+# TODO всего 6 вариантов! которые легко описать в условиях
+
+if ((brick_x <= hole_x) and (brick_y <= hole_y)) or ((brick_x <= hole_y) and (brick_y <= hole_x)):
+    print('ДА')
+elif ((brick_z <= hole_x) and (brick_x <= hole_y)) or ((brick_z <= hole_y) and (brick_x <= hole_x)):
+    print('ДА')
+elif ((brick_z <= hole_x) and (brick_y <= hole_y)) or ((brick_z <= hole_y) and (brick_y <= hole_x)):
+    print('ДА')
 else:
     print('НЕТ')
