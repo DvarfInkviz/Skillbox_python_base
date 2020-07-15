@@ -26,5 +26,7 @@ def smile(x, y, color):
 
 
 for _ in range(10):
-    smile(sd.random_number(50, 500), sd.random_number(50,500), sd.random_color())
+    smile(sd.random_number(50, 500), sd.random_number(50, 500), sd.random_color())
 sd.pause()
+
+# Зачёт!

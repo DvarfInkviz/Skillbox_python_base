@@ -33,3 +33,5 @@ for x in range(5, 1200, brick_seam + brick_length):
     line_point2 = sd.get_point(x=x-4, y=600)
     sd.line(start_point=line_point1, end_point=line_point2, color=seam_color, width=brick_seam)
 sd.pause()
+
+# Зачёт!
