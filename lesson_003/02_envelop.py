@@ -20,24 +20,11 @@ paper_x, paper_y = 8, 9
 # paper_x, paper_y = 11, 9
 # paper_x, paper_y = 9, 11
 # (просто раскоментировать нужную строку и проверить свой код)
-# TODO Условия нужно упростить. Некоторые условия записана по два раза.
-#  Здесь достаточно сделать две проверки. В первой проверить что две стороны
-#  листа меньше или равны размеру конверта, и если проверка не прошла
-#  повернуть лист на 90 градусов и проверить ещё раз.
-#  Сформулируйте условия также как во второй части этого задания.
-if paper_x <= envelop_x:
-    if paper_y <= envelop_y:
-        print('ДА')
-    elif paper_y <= envelop_x:
-        if paper_x <= envelop_y:
-            print('ДА')
-        else:
-            print('НЕТ')
-elif paper_x <= envelop_y:
-    if paper_y <= envelop_x:
-        print('ДА')
-    else:
-        print('НЕТ')
+
+if (paper_x <= envelop_x) and (paper_y <= envelop_y):
+    print('ДА')
+elif (paper_y <= envelop_x) and (paper_x <= envelop_y):
+    print('ДА')
 else:
     print('НЕТ')
 
