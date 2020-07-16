@@ -57,6 +57,9 @@ store = {
 for good, code in goods.items():
     total_price = 0
     total_qnt = 0
+    # TODO Цикл можно сделать непосредственно по store[code].
+    #  Тогда получить значения из словаря будет немного проще:
+    #  item['quantity'], вместо  store[code][item]['quantity']
     for item in range(len(store[code])):
         total_qnt += store[code][item]['quantity']
         total_price += store[code][item]['quantity'] * store[code][item]['price']
