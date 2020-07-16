@@ -61,3 +61,5 @@ for good, code in goods.items():
         total_qnt += item['quantity']
         total_price += item['quantity'] * item['price']
     print(f'{good} - {total_qnt} шт, стоимость {total_price} руб')
+
+# Зачёт!
