@@ -51,7 +51,7 @@ while True:
     else:
         print('Вы ввели некорректный номер цвета!')
 
-# point = sd.get_point(300, 300)
+# Если использовать второй метод из первого задания, то вместо цикла будет вызвано 4 подряд функции построения фигур
 for i in range(3, 7):
     point = sd.get_point(sd.random_number(100, 800), sd.random_number(100, 800))
     shape_draw(_point=point, _length=200, _n_corner=i, _angle=0, _color=colors[color])
