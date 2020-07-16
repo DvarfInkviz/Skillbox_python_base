@@ -118,3 +118,5 @@ elif ((brick_z <= hole_x) and (brick_y <= hole_y)) or ((brick_z <= hole_y) and (
     print('ДА')
 else:
     print('НЕТ')
+
+# Зачёт!

@@ -18,6 +18,8 @@ for _ in range(3):
 def bubble(_point, _step, _width, _color):
     _radius = 50
     for _ in range(3):
+        # TODO Кажется забыли поменять на _step.
+        #  Из-за этого возникает ошибка.
         _radius += step
         sd.circle(center_position=_point, radius=_radius, width=_width, color=_color)
 
