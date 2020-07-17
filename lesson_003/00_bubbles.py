@@ -43,3 +43,5 @@ for _ in range(100):
     bubble(_point=point, _step=step, _width=2, _color=sd.random_color())
 
 sd.pause()
+
+# Зачёт!
