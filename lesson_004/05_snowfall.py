@@ -16,10 +16,12 @@ N = 20
 # sd.sleep()
 # sd.random_number()
 # sd.user_want_exit()
+
 coordinates = []
 for _ in range(N):
-    coordinates.append([sd.random_number(0, 1200), sd.random_number(800, 900), sd.random_number(10, 100)])
+    coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900), sd.random_number(10, 50)])
 
+# TODO Часть 1!
 while True:
     sd.clear_screen()
     for item in coordinates:
@@ -73,19 +75,18 @@ while True:
 #     если пользователь хочет выйти
 #       прервать цикл
 
-# TODO эта часть не закончена еще
+# TODO часть 2!
 # while True:
-#
-#     for i, item in enumerate(coordinates):
-#         if i > 0:
-#             sd.snowflake(center=point, length=item[2])
+#     for item in coordinates:
 #         sd.start_drawing()
 #         point = sd.get_point(item[0], item[1])
-#         sd.snowflake(center=point, length=item[2])
+#         sd.snowflake(center=point, length=item[2], color=sd.background_color)
 #         item[1] -= 10
-#         if item[1] < 50:
+#         if item[1] < 5:
 #             break
 #         item[0] += 2
+#         point = sd.get_point(item[0], item[1])
+#         sd.snowflake(center=point, length=item[2])
 #         sd.finish_drawing()
 #     sd.sleep(0.1)
 #     if sd.user_want_exit():
@@ -96,5 +97,40 @@ while True:
 # - сделать сугоб внизу экрана - если снежинка долетает до низа, оставлять её там,
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
+
+# TODO часть 3! переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
+#  всем снежинкам на экране; одновременно падает N снежинок
+# i = 0
+# snow = 100
+# while i < snow:
+#     y = 0
+#     while y < len(coordinates):
+#         if len(coordinates) > 0:
+#             item = coordinates[y]
+#             # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
+#             sd.start_drawing()
+#             point = sd.get_point(item[0], item[1])
+#             sd.snowflake(center=point, length=item[2], color=sd.background_color)
+#             item[1] -= sd.random_number(10, 20)
+#             item[0] += sd.random_number(-3, 3)
+#             point = sd.get_point(item[0], item[1])
+#             sd.snowflake(center=point, length=item[2])
+#             if item[1] < 10 + i:
+#                 del coordinates[y]
+#                 if y != 0:
+#                     y -= 1
+#                 if i < snow - 1:
+#                     coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
+#                                         sd.random_number(10, 50)])
+#                     i += 1
+#                 continue
+#             sd.finish_drawing()
+#             y += 1
+#     if len(coordinates) == 0:
+#         i = snow
+#         # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
+#     sd.sleep(0.1)
+#     if sd.user_want_exit():
+#         break
 
 sd.pause()
