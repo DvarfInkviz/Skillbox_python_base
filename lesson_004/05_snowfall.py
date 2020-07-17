@@ -2,7 +2,7 @@
 
 import simple_draw as sd
 
-
+sd.resolution = (1200, 900)
 # На основе кода из практической части реализовать снегопад:
 # - создать списки данных для отрисовки N снежинок
 # - нарисовать падение этих N снежинок
@@ -16,15 +16,22 @@ N = 20
 # sd.sleep()
 # sd.random_number()
 # sd.user_want_exit()
-
+coordinates = []
+for _ in range(N):
+    coordinates.append([sd.random_number(0, 1200), sd.random_number(800, 900), sd.random_number(10, 100)])
 
 while True:
     sd.clear_screen()
-    # TODO здесь ваш код
+    for item in coordinates:
+        point = sd.get_point(item[0], item[1])
+        sd.snowflake(center=point, length=item[2])
+        item[1] -= 10
+        if item[1] < 50:
+            break
+        item[0] += 2
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
-sd.pause()
 
 # Примерный алгоритм отрисовки снежинок
 #   навсегда
@@ -66,6 +73,23 @@ sd.pause()
 #     если пользователь хочет выйти
 #       прервать цикл
 
+# TODO эта часть не закончена еще
+# while True:
+#
+#     for i, item in enumerate(coordinates):
+#         if i > 0:
+#             sd.snowflake(center=point, length=item[2])
+#         sd.start_drawing()
+#         point = sd.get_point(item[0], item[1])
+#         sd.snowflake(center=point, length=item[2])
+#         item[1] -= 10
+#         if item[1] < 50:
+#             break
+#         item[0] += 2
+#         sd.finish_drawing()
+#     sd.sleep(0.1)
+#     if sd.user_want_exit():
+#         break
 
 # Усложненное задание (делать по желанию)
 # - сделать рандомные отклонения вправо/влево при каждом шаге
@@ -73,3 +97,4 @@ sd.pause()
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
+sd.pause()
