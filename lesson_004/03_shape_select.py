@@ -56,3 +56,5 @@ draw_function = shape[1]
 draw_function(_point=point, _length=50, _angle=sd.random_number(10, 50))
 
 sd.pause()
+
+# Зачёт!
