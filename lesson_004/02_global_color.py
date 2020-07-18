@@ -51,3 +51,5 @@ for i in range(3, 7):
     shape_draw(_point=point, _length=200, _n_corner=i, _angle=0, _color=color[1])
 
 sd.pause()
+
+# Зачёт!

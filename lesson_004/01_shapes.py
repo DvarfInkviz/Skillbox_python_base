@@ -167,3 +167,5 @@ hexagon_v2(_point=sd.random_point(), _angle=8, _length=100)
 
 
 sd.pause()
+
+# Зачёт!
