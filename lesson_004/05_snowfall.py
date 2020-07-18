@@ -105,38 +105,31 @@ for _ in range(N):
 #  переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
 #  всем снежинкам на экране; одновременно падает N снежинок.
 
-# TODO  Попробуйте сделать так, чтобы снегопад продолжался бесконечно,
-#  пока пользователь его не прервёт.
 i = 0
 snow = 100
-while i < snow:
+while True:
     y = 0
     while y < len(coordinates):
-        if len(coordinates) > 0:
-            item = coordinates[y]
-            # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
-            sd.start_drawing()
-            point = sd.get_point(item[0], item[1])
-            sd.snowflake(center=point, length=item[2], color=sd.background_color)
-            item[1] -= sd.random_number(10, 20)
-            item[0] += sd.random_number(-5, 5)
-            point = sd.get_point(item[0], item[1])
-            sd.snowflake(center=point, length=item[2])
-            if item[1] < 10 + i:
-                del coordinates[y]
-                if y != 0:
-                    y -= 1
-                if i < snow - 1:
-                    coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
-                                        sd.random_number(10, 50)])
-                    i += 1
-                continue
-            sd.finish_drawing()
-            y += 1
-    if len(coordinates) == 0:
-        i = snow
-        # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
-    sd.sleep(0.001)
+        item = coordinates[y]
+        sd.start_drawing()
+        point = sd.get_point(item[0], item[1])
+        sd.snowflake(center=point, length=item[2], color=sd.background_color)
+        item[1] -= sd.random_number(10, 20)
+        item[0] += sd.random_number(-5, 5)
+        point = sd.get_point(item[0], item[1])
+        sd.snowflake(center=point, length=item[2])
+        if item[1] < 10 + i:
+            del coordinates[y]
+            if y != 0:
+                y -= 1
+            coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
+                                sd.random_number(10, 50)])
+            if i < 150:
+                i += 1
+            continue
+        sd.finish_drawing()
+        y += 1
+    sd.sleep(0.1)
     if sd.user_want_exit():
         break
 
