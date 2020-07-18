@@ -27,6 +27,12 @@ def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLO
             vector.draw(color=_color)
 
 
+# TODO Создайте структуру данных вида:
+#  colors = {'1': ['красный', sd.COLOR_RED], ...}
+#  или так colors = {'1': {'name': 'красный', 'color': sd.COLOR_RED}, ...}
+#  Так будет удобнее добавлять, удалять менять местами цвета, если
+#  возникнет такая необходимость. А использование словаря поможет в выводе сообщений и
+#  обработке пользовательского ввода.
 colors = {
     1: sd.COLOR_RED,
     2: sd.COLOR_ORANGE,

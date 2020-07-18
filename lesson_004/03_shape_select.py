@@ -9,6 +9,18 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
+# TODO Ключевой элемент этого задания заключается в использовании нескольких функций
+#  и выбора одной их них для рисования фигур.
+#  Будет удобно создать словарь в значениях которого будут храниться
+#  названием фигур и ссылками на функции, а ключами словаря будут цифры,
+#  вводимые пользователем.
+#  Ссылки на функции, проще говоря их названия, можно поместить в структуру данных:
+#  список, кортеж, словарь, ... На примере списков это работает так:
+#  functs = [pentagon, hexagon, triangle]
+#  draw_function = functs[0]
+#  draw_function(start_point, start_angle, length
+
+
 
 def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLOW):
     prv_point = _point

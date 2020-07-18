@@ -94,3 +94,5 @@ root_point = sd.get_point(600, 70)
 sd.line(start_point=zero_point, end_point=root_point, width=5, color=(138, 102, 66))
 draw_branches_recursion2(start_point=root_point, _angle=90, _length=120)
 sd.pause()
+
+# Зачёт!

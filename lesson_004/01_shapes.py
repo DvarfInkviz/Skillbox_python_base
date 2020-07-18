@@ -125,7 +125,9 @@ hexagon(_point=sd.random_point(), _angle=8, _length=100)
 # (если он есть. подсказка - на последней итерации можно использовать линию от первой точки)
 
 
-# TODO вариант номер 2 с общей функцией
+#  вариант номер 2 с общей функцией
+#  Второй вариант уменьшает дублирование кода недостаточно. Цикл нужно делать
+#  в общей функции, т. е. то, что вы сделали в варианте 3.
 def vector_draw(_point, _angle, _length, _width, _color=sd.COLOR_YELLOW):
     _vector = sd.get_vector(start_point=_point, angle=_angle, length=_length, width=_width)
     _vector.draw(color=_color)
@@ -178,9 +180,11 @@ pentagon_v2(_point=sd.random_point(), _angle=35, _length=100)
 hexagon_v2(_point=sd.random_point(), _angle=8, _length=100)
 
 
-# TODO третий вариант с одной функцией, рисующей равносторонние n-угольники
+# третий вариант с одной функцией, рисующей равносторонние n-угольники
 def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLOW):
     prv_point = _point
+    # TODO От проверки внутри цикла можно избавиться, если рисовать линию после цикла,
+    #  уменьшив значение range на 1.
     for _i in range(_n_corner):
         if _i == _n_corner-1:
             sd.line(start_point=prv_point, end_point=_point, width=3, color=_color)
@@ -188,6 +192,9 @@ def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLO
             vector = sd.get_vector(start_point=prv_point, angle=_angle + _i * 360 / _n_corner, length=_length, width=3)
             prv_point = vector.end_point
             vector.draw(color=_color)
+
+# TODO Раз вы начали делать вторую часть, то добавьте отдельные функции
+#  рисования фигур, в которых будет вызываться общая функция.
 
 
 point = sd.get_point(900, 600)
