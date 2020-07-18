@@ -74,11 +74,13 @@ for _ in range(N):
 #     немного поспать
 #     если пользователь хочет выйти
 #       прервать цикл
-# TODO Третья часть получилась
+# TODO
+#  Третья часть получилась - Почему? здесь только ускоренная отрисовка! Принципиально ли создавать раздельные
+#  списки для входных данных или можно было сделать список списков?
 #  часть 2!
 # while True:
+#     sd.start_drawing()
 #     for item in coordinates:
-#         sd.start_drawing()
 #         point = sd.get_point(item[0], item[1])
 #         sd.snowflake(center=point, length=item[2], color=sd.background_color)
 #         item[1] -= 10
@@ -87,7 +89,7 @@ for _ in range(N):
 #         item[0] += 2
 #         point = sd.get_point(item[0], item[1])
 #         sd.snowflake(center=point, length=item[2])
-#         sd.finish_drawing()
+#     sd.finish_drawing()
 #     sd.sleep(0.1)
 #     if sd.user_want_exit():
 #         break
@@ -98,39 +100,40 @@ for _ in range(N):
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
-#  часть 3! переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
-#  всем снежинкам на экране; одновременно падает N снежинок
-# i = 0
-# snow = 100
-# while i < snow:
-#     y = 0
-#     while y < len(coordinates):
-#         if len(coordinates) > 0:
-#             item = coordinates[y]
-#             # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
-#             sd.start_drawing()
-#             point = sd.get_point(item[0], item[1])
-#             sd.snowflake(center=point, length=item[2], color=sd.background_color)
-#             item[1] -= sd.random_number(10, 20)
-#             item[0] += sd.random_number(-3, 3)
-#             point = sd.get_point(item[0], item[1])
-#             sd.snowflake(center=point, length=item[2])
-#             if item[1] < 10 + i:
-#                 del coordinates[y]
-#                 if y != 0:
-#                     y -= 1
-#                 if i < snow - 1:
-#                     coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
-#                                         sd.random_number(10, 50)])
-#                     i += 1
-#                 continue
-#             sd.finish_drawing()
-#             y += 1
-#     if len(coordinates) == 0:
-#         i = snow
-#         # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
-#     sd.sleep(0.1)
-#     if sd.user_want_exit():
-#         break
+# TODO часть 3! Тут добавлены отклонения по оси Х и растущий сугроб!
+#  переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
+#  всем снежинкам на экране; одновременно падает N снежинок.
+i = 0
+snow = 100
+while i < snow:
+    y = 0
+    while y < len(coordinates):
+        if len(coordinates) > 0:
+            item = coordinates[y]
+            # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
+            sd.start_drawing()
+            point = sd.get_point(item[0], item[1])
+            sd.snowflake(center=point, length=item[2], color=sd.background_color)
+            item[1] -= sd.random_number(10, 20)
+            item[0] += sd.random_number(-5, 5)
+            point = sd.get_point(item[0], item[1])
+            sd.snowflake(center=point, length=item[2])
+            if item[1] < 10 + i:
+                del coordinates[y]
+                if y != 0:
+                    y -= 1
+                if i < snow - 1:
+                    coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
+                                        sd.random_number(10, 50)])
+                    i += 1
+                continue
+            sd.finish_drawing()
+            y += 1
+    if len(coordinates) == 0:
+        i = snow
+        # print(f'i= {i}, y= {y} из {len(coordinates)} - {item}')
+    sd.sleep(0.001)
+    if sd.user_want_exit():
+        break
 
 sd.pause()

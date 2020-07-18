@@ -126,80 +126,40 @@ hexagon(_point=sd.random_point(), _angle=8, _length=100)
 
 
 #  вариант номер 2 с общей функцией
-#  Второй вариант уменьшает дублирование кода недостаточно. Цикл нужно делать
-#  в общей функции, т. е. то, что вы сделали в варианте 3.
-def vector_draw(_point, _angle, _length, _width, _color=sd.COLOR_YELLOW):
-    _vector = sd.get_vector(start_point=_point, angle=_angle, length=_length, width=_width)
-    _vector.draw(color=_color)
-    return _vector.end_point
+def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLOW):
+    prv_point = _point
+    for _i in range(_n_corner-1):
+        vector = sd.get_vector(start_point=prv_point, angle=_angle + _i * 360 / _n_corner, length=_length, width=3)
+        prv_point = vector.end_point
+        vector.draw(color=_color)
+    sd.line(start_point=prv_point, end_point=_point, width=3, color=_color)
 
 
 def triangle_v2(_point, _length=200, _angle=0):
-    _prv_point = _point
-    for _i in range(3):
-        if _i == 2:
-            sd.line(start_point=_prv_point, end_point=_point, width=3, color=sd.random_color())
-        else:
-            _prv_point = vector_draw(_point=_prv_point, _length=_length, _angle=_angle + _i * 360 / 3, _width=3,
-                                     _color=sd.random_color())
+    shape_draw(_point=_point, _length=_length, _angle=_angle, _n_corner=3, _color=sd.random_color())
 
 
 def square_v2(_point, _length=200, _angle=0):
-    _prv_point = _point
-    for _i in range(4):
-        if _i == 3:
-            sd.line(start_point=_prv_point, end_point=_point, width=3, color=sd.random_color())
-        else:
-            _prv_point = vector_draw(_point=_prv_point, _length=_length, _angle=_angle + _i * 360 / 4, _width=3,
-                                     _color=sd.random_color())
+    shape_draw(_point=_point, _length=_length, _angle=_angle, _n_corner=4, _color=sd.random_color())
 
 
 def pentagon_v2(_point, _length=200, _angle=0):
-    _prv_point = _point
-    for _i in range(5):
-        if _i == 4:
-            sd.line(start_point=_prv_point, end_point=_point, width=3, color=sd.random_color())
-        else:
-            _prv_point = vector_draw(_point=_prv_point, _length=_length, _angle=_angle + _i * 360 / 5, _width=3,
-                                     _color=sd.random_color())
+    shape_draw(_point=_point, _length=_length, _angle=_angle, _n_corner=5, _color=sd.random_color())
 
 
 def hexagon_v2(_point, _length=200, _angle=0):
-    _prv_point = _point
-    for _i in range(6):
-        if _i == 5:
-            sd.line(start_point=_prv_point, end_point=_point, width=3, color=sd.random_color())
-        else:
-            _prv_point = vector_draw(_point=_prv_point, _length=_length, _angle=_angle + _i * 360 / 6, _width=3,
-                                     _color=sd.random_color())
+    shape_draw(_point=_point, _length=_length, _angle=_angle, _n_corner=6, _color=sd.random_color())
 
+
+point = sd.get_point(900, 600)
+# for i in range(3, 15):
+#     shape_draw(_point=point, _length=200, _n_corner=i, _angle=(i-3)*15, _color=sd.random_color())
 
 triangle_v2(_point=sd.random_point(), _angle=23, _length=100)
 square_v2(_point=sd.random_point(), _angle=67, _length=100)
 pentagon_v2(_point=sd.random_point(), _angle=35, _length=100)
 hexagon_v2(_point=sd.random_point(), _angle=8, _length=100)
 
-
-# третий вариант с одной функцией, рисующей равносторонние n-угольники
-def shape_draw(_point, _length=100, _angle=0, _n_corner=3, _color=sd.COLOR_YELLOW):
-    prv_point = _point
-    # TODO От проверки внутри цикла можно избавиться, если рисовать линию после цикла,
-    #  уменьшив значение range на 1.
-    for _i in range(_n_corner):
-        if _i == _n_corner-1:
-            sd.line(start_point=prv_point, end_point=_point, width=3, color=_color)
-        else:
-            vector = sd.get_vector(start_point=prv_point, angle=_angle + _i * 360 / _n_corner, length=_length, width=3)
-            prv_point = vector.end_point
-            vector.draw(color=_color)
-
-# TODO Раз вы начали делать вторую часть, то добавьте отдельные функции
-#  рисования фигур, в которых будет вызываться общая функция.
-
-
-point = sd.get_point(900, 600)
-for i in range(3, 15):
-    shape_draw(_point=point, _length=200, _n_corner=i, _angle=(i-3)*15, _color=sd.random_color())
 # Часть 2-бис.
 # А теперь - сколько надо работы что бы внести изменения в код? Выгода на лицо :)
 # Поэтому среди программистов есть принцип D.R.Y. https://clck.ru/GEsA9
