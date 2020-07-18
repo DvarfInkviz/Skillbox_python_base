@@ -22,18 +22,18 @@ for _ in range(N):
     coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900), sd.random_number(10, 50)])
 
 # TODO Часть 1!
-while True:
-    sd.clear_screen()
-    for item in coordinates:
-        point = sd.get_point(item[0], item[1])
-        sd.snowflake(center=point, length=item[2])
-        item[1] -= 10
-        if item[1] < 50:
-            break
-        item[0] += 2
-    sd.sleep(0.1)
-    if sd.user_want_exit():
-        break
+# while True:
+#     sd.clear_screen()
+#     for item in coordinates:
+#         point = sd.get_point(item[0], item[1])
+#         sd.snowflake(center=point, length=item[2])
+#         item[1] -= 10
+#         if item[1] < 50:
+#             break
+#         item[0] += 2
+#     sd.sleep(0.1)
+#     if sd.user_want_exit():
+#         break
 
 # Примерный алгоритм отрисовки снежинок
 #   навсегда
@@ -74,8 +74,8 @@ while True:
 #     немного поспать
 #     если пользователь хочет выйти
 #       прервать цикл
-
-# TODO часть 2!
+# TODO Третья часть получилась
+#  часть 2!
 # while True:
 #     for item in coordinates:
 #         sd.start_drawing()
@@ -98,7 +98,7 @@ while True:
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
-# TODO часть 3! переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
+#  часть 3! переменная i считает упавшие снежинки; досчитав до snow, программа дает возможность упасть
 #  всем снежинкам на экране; одновременно падает N снежинок
 # i = 0
 # snow = 100
