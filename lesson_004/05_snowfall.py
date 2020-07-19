@@ -134,3 +134,5 @@ while True:
         break
 
 sd.pause()
+
+# Зачёт!
