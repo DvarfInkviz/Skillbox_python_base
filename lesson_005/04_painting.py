@@ -17,8 +17,26 @@
 #  - справа в небе - радуга, слева - солнце (весна же!)
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
+from epoch_canvas.animation import go_sun
+from epoch_canvas.house import draw_house
+from epoch_canvas.nature import snowdrift, grass, draw_tree, sun, rainbow
 
-# TODO здесь ваш код
+import simple_draw as sd
+
+sd.resolution = (1200, 900)
+sd.caption = 'Epoch canvas - Morning in the village'
+sd.background_color = (135, 206, 235)
+sd.start_drawing()
+draw_house(_x=330, _y=10)
+grass()
+snowdrift()
+draw_tree(850)
+draw_tree(1000, 10)
+sun(_delta=12)
+rainbow()
+sd.finish_drawing()
+go_sun(12)
+sd.pause()
 
 # Усложненное задание (делать по желанию)
 # Анимировать картину.
