@@ -2,8 +2,7 @@
 import simple_draw as sd
 
 
-def draw_house(_x=300, _y=300):
-    sd.resolution = (1000, 1000)
+def draw_house(_x=300, _y=10):
     brick_height = 50
     brick_length = 100
     brick_seam = 6
@@ -30,7 +29,3 @@ def draw_house(_x=300, _y=300):
     #     line_point1 = sd.get_point(x=x-4, y=0)
     #     line_point2 = sd.get_point(x=x-4, y=600)
     #     sd.line(start_point=line_point1, end_point=line_point2, color=seam_color, width=brick_seam)
-    sd.pause()
-
-
-draw_house()
