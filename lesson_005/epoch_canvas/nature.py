@@ -64,7 +64,18 @@ def rainbow():
     step = 5
     width = 4
     for colors in rainbow_colors:
-        point = sd.get_point(400, -100)
+        point = sd.get_point(430, -100)
         radius = 1000 - i * step
         sd.circle(center_position=point, radius=radius, width=width, color=colors)
         i += 1
+
+
+def cloud(_x=190, _y=405, _color=(236, 240, 241)):
+    point = sd.get_point(_x, _y)
+    sd.circle(center_position=point, radius=50, color=_color, width=0)
+    point = sd.get_point(_x+110, _y-5)
+    sd.circle(center_position=point, radius=40, color=_color, width=0)
+    point = sd.get_point(_x+70, _y+25)
+    sd.circle(center_position=point, radius=70, color=_color, width=0)
+    point = sd.get_point(_x+5, _y+51)
+    sd.circle(center_position=point, radius=20, color=_color, width=0)
