@@ -9,6 +9,8 @@
 # Функции по модулям разместить по тематике. Название пакета и модулей - по смыслу.
 # Создать модуль с функцией отрисовки кирпичного дома с широким окном и крышей.
 
+import simple_draw as sd
+
 # С помощью созданного пакета нарисовать эпохальное полотно "Утро в деревне".
 # На картине должны быть:
 #  - кирпичный дом, в окошке - смайлик.
@@ -20,9 +22,6 @@
 from epoch_canvas.animation import go_go
 from epoch_canvas.house import draw_house
 from epoch_canvas.nature import snowdrift, grass, draw_tree, rainbow, sun_0
-
-import simple_draw as sd
-
 from epoch_canvas.smile import smile
 
 sd.resolution = (1200, 900)
@@ -48,3 +47,5 @@ sd.finish_drawing()
 # Задержку в анимировании все равно надо ставить, пусть даже 0.01 сек - так библиотека устойчивей работает.
 go_go(0.03)
 sd.pause()
+
+# Зачёт!

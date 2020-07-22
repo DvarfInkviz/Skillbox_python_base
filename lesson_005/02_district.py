@@ -18,3 +18,5 @@ separator = ', '
 residents = room1.folks + room2.folks + room3.folks + room4.folks + room5.folks + room6.folks + room7.folks + \
             room8.folks
 print(f'На районе живут {separator.join(residents)}')
+
+# Зачёт!
