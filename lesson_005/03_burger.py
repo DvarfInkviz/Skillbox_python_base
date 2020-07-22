@@ -52,3 +52,5 @@ for i in range(10):
     item()
 item = ingredients[0]
 item()
+
+# Зачёт!
