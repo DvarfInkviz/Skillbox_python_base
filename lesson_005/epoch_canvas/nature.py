@@ -2,7 +2,12 @@
 import simple_draw as sd
 
 
-def sun(_x=200, _y=700, _color=sd.COLOR_YELLOW, _delta=0):
+def sun_0(_x=200, _y=700):
+    point = sd.get_point(x=_x, y=_y)
+    sd.circle(center_position=point, width=0)
+
+
+def sun(_x=200, _y=700, _color=sd.COLOR_YELLOW, _delta=12):
     point = sd.get_point(x=_x, y=_y)
     sd.circle(center_position=point, width=0)
     for i in range(8):
@@ -57,9 +62,7 @@ def grass(_x=1200):
         x += sd.random_number(1, 4)
 
 
-def rainbow():
-    rainbow_colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN,
-                      sd.COLOR_CYAN, sd.COLOR_BLUE, sd.COLOR_PURPLE)
+def rainbow(rainbow_colors):
     i = 0
     step = 5
     width = 4
@@ -70,7 +73,7 @@ def rainbow():
         i += 1
 
 
-def cloud(_x=190, _y=405, _color=(236, 240, 241)):
+def cloud(_x=190, _y=700, _color=(236, 240, 241)):
     point = sd.get_point(_x, _y)
     sd.circle(center_position=point, radius=50, color=_color, width=0)
     point = sd.get_point(_x+110, _y-5)
