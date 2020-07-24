@@ -43,5 +43,54 @@
 # только с загаданным числом, а 01_mastermind - с пользователем и просто передает числа на проверку движку.
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
+from termcolor import colored
 
-# TODO здесь ваш код...
+from mastermind_engine import guess_number, check_number
+
+
+def is_number_correct(_number):
+    numbers = '0123456789'
+    if _number.isdigit():
+        if len(_number) == 4:
+            if _number[0] in numbers[1:]:
+                numbers = numbers.replace(_number[0], '')
+                if _number[1] in numbers:
+                    numbers = numbers.replace(_number[1], '')
+                    if _number[2] in numbers:
+                        numbers = numbers.replace(_number[2], '')
+                        if _number[3] in numbers:
+                            return True
+    return False
+
+
+iteration = 0
+guess_number()
+print('Загаданное число пока нам неизвестно )')
+number = input(colored('Введите число ', color='blue'))
+while True:
+    iteration += 1
+    if is_number_correct(number):
+        answer = check_number(number)
+        print(f"Быков - {answer['bulls']}; коров - {answer['cows']}")
+        if answer['bulls'] == 4:
+            new_game = input(colored(f'Вы отгадали число! Затрачено {iteration} хода(ов)!\nХотите еще партию? (y/n) ',
+                                     color='magenta'))
+            while True:
+                if (new_game == 'y') or (new_game == 'Y'):
+                    iteration = 0
+                    guess_number()
+                    print('Загаданное число пока нам неизвестно )')
+                    number = input(colored('Введите число ', color='blue'))
+                    break
+                elif (new_game == 'n') or (new_game == 'N'):
+                    break
+                else:
+                    new_game = input(colored('Что-то неразборчиво! Хотите еще партию? (y/n) ', color='red'))
+            if (new_game == 'y') or (new_game == 'Y'):
+                continue
+            else:
+                break
+        else:
+            number = input(colored('Попробуйте еще раз: ', color='blue'))
+    else:
+        number = input(colored('Введи число в правильном формате: ', color='red'))
