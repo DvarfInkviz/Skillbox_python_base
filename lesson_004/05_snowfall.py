@@ -17,9 +17,9 @@ N = 20
 # sd.random_number()
 # sd.user_want_exit()
 
-coordinates = []
+_coordinates = []
 for _ in range(N):
-    coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900), sd.random_number(10, 50)])
+    _coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900), sd.random_number(10, 50)])
 
 #  Часть 1!
 # while True:
@@ -109,8 +109,8 @@ i = 0
 snow = 100
 while True:
     y = 0
-    while y < len(coordinates):
-        item = coordinates[y]
+    while y < len(_coordinates):
+        item = _coordinates[y]
         sd.start_drawing()
         point = sd.get_point(item[0], item[1])
         sd.snowflake(center=point, length=item[2], color=sd.background_color)
@@ -119,11 +119,11 @@ while True:
         point = sd.get_point(item[0], item[1])
         sd.snowflake(center=point, length=item[2])
         if item[1] < 10 + i:
-            del coordinates[y]
+            del _coordinates[y]
             if y != 0:
                 y -= 1
-            coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
-                                sd.random_number(10, 50)])
+            _coordinates.append([sd.random_number(200, 900), sd.random_number(800, 900),
+                                 sd.random_number(10, 50)])
             if i < 150:
                 i += 1
             continue
