@@ -62,7 +62,9 @@ print('Загаданное число пока нам неизвестно )')
 number = input(colored('Введите число ', color='blue'))
 while True:
     iteration += 1
+    print(number)
     if is_number_correct(number):
+        print(type(number))
         answer = check_number(number)
         print(f"Быков - {answer['bulls']}; коров - {answer['cows']}")
         if answer['bulls'] == 4:
