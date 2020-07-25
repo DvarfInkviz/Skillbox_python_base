@@ -48,19 +48,11 @@ from termcolor import colored
 
 
 def is_number_correct(_number):
-    numbers = '0123456789'
+    _length = len(_number)
+    _set_num = set(_number)
     if _number.isdigit():
-        # TODO Для проверки числа на уникальность цифр можно преобразовать строку в множество.
-        #  Если длина множества будет равна длине строки, значит строка состоит из уникальных символов.
-        if len(_number) == 4:
-            if _number[0] in numbers[1:]:
-                numbers = numbers.replace(_number[0], '')
-                if _number[1] in numbers:
-                    numbers = numbers.replace(_number[1], '')
-                    if _number[2] in numbers:
-                        numbers = numbers.replace(_number[2], '')
-                        if _number[3] in numbers:
-                            return True
+        if (_length == 4) and (_length == len(_set_num)):
+            return True
     return False
 
 
@@ -95,5 +87,3 @@ while True:
             number = input(colored('Попробуйте еще раз: ', color='blue'))
     else:
         number = input(colored('Введи число в правильном формате: ', color='red'))
-
-# TODO Исправьте замечания в модуле mastermind_engine
