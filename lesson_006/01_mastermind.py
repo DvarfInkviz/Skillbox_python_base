@@ -21,6 +21,7 @@
 # > быки - 1, коровы - 1
 
 
+from mastermind_engine import guess_number, check_number
 # Составить отдельный модуль mastermind_engine, реализующий функциональность игры.
 # В mastermind_engine нужно реализовать функции:
 #   загадать_число()
@@ -45,12 +46,12 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 from termcolor import colored
 
-from mastermind_engine import guess_number, check_number
-
 
 def is_number_correct(_number):
     numbers = '0123456789'
     if _number.isdigit():
+        # TODO Для проверки числа на уникальность цифр можно преобразовать строку в множество.
+        #  Если длина множества будет равна длине строки, значит строка состоит из уникальных символов.
         if len(_number) == 4:
             if _number[0] in numbers[1:]:
                 numbers = numbers.replace(_number[0], '')
@@ -94,3 +95,5 @@ while True:
             number = input(colored('Попробуйте еще раз: ', color='blue'))
     else:
         number = input(colored('Введи число в правильном формате: ', color='red'))
+
+# TODO Исправьте замечания в модуле mastermind_engine

@@ -28,6 +28,7 @@ while True:
     snowflake_over_screen()
     if len(_over_screen) > 0:
         del_snowflake(_over_screen)
+        # TODO Нужно удалять столько снежинок, сколько было удалено перед этим.
         add_snowflake(10)
     #  если есть номера_достигших_низа_экрана() то
     #       удалить_снежинки(номера)
@@ -37,3 +38,5 @@ while True:
         break
 
 sd.pause()
+
+# TODO Исправьте замечания в модуле snowfall.
