@@ -62,9 +62,7 @@ print('Загаданное число пока нам неизвестно )')
 number = input(colored('Введите число ', color='blue'))
 while True:
     iteration += 1
-    print(number)
     if is_number_correct(number):
-        print(type(number))
         answer = check_number(number)
         print(f"Быков - {answer['bulls']}; коров - {answer['cows']}")
         if answer['bulls'] == 4:
@@ -89,5 +87,3 @@ while True:
             number = input(colored('Попробуйте еще раз: ', color='blue'))
     else:
         number = input(colored('Введи число в правильном формате: ', color='red'))
-
-# TODO Исправьте ошибку в модуле mastermind_engine.
