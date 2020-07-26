@@ -26,9 +26,13 @@ def check_number(estimated_number):
         elif _number in _secret_number:
             res['cows'] += 1
     return res
-# TODO не могу никак понять почему выдается ошибка при проверке условия if _secret_number.index(_number) == i:
+#  не могу никак понять почему выдается ошибка при проверке условия if _secret_number.index(_number) == i:
 #  функции check_number. При попытке понять, что происходит, вписал print вокруг этого места
 #  пример вывода в окне терминала с комментариями откуда ведется вывод:
+# TODO Это стандартное исключение возникающее, когда при поиске индекса по значению элемента,
+#  элемент в списке не найден.
+#  Ошибку можно исправить, если в условии сравнивать _number с i-м значением _secret_number.
+
 #  ---------------
 #  F:\Python38\python.exe F:/SkillBox/Les01/lesson_006/01_mastermind.py
 #   9214  ## line 15 in File "F:/SkillBox/Les01/lesson_006/mastermind_engine.py"
