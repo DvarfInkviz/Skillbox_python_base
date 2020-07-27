@@ -87,3 +87,5 @@ while True:
             number = input(colored('Попробуйте еще раз: ', color='blue'))
     else:
         number = input(colored('Введи число в правильном формате: ', color='red'))
+
+# Зачёт!
