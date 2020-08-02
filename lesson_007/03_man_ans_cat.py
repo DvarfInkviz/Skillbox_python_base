@@ -178,6 +178,7 @@ cats = [
     Cat(),
     Cat(),
 ]
+rips = {}
 
 my_sweet_home = House()
 for citizen in citizens:
@@ -199,23 +200,26 @@ for day in range(1, 366):
             if cat.fullness > 0:
                 cat.act()
     print('--- в конце дня ---')
-    rip = 0
     for citizen in citizens:
         if citizen.fullness > 0:
             print(citizen)
-        else:
-            rip += 1
+        elif citizen.name not in rips:
+            rips[citizen.name] = day
     if day >= day_x:
         for cat in cats:
             if cat.fullness > 0:
                 print(cat)
-            else:
-                rip += 1
+            elif cat.name not in rips:
+                rips[cat.name] = day
     print(my_sweet_home)
-    if rip == len(citizens)+len(cats):
-        cprint('Все умерли... R.I.P.\nОни прожили {} дней'.format(day), color='red')
+    if len(rips) == len(citizens)+len(cats):
+        cprint('Все умерли... R.I.P.', color='red')
+        for item in rips.items():
+            cprint('{} прожил {} дней'.format(item[0], item[1]), color='red')
         break
-
+if len(rips) < len(citizens)+len(cats):
+    for item in rips.items():
+        cprint('{} прожил {} дней'.format(item[0], item[1]), color='red')
 
 # Усложненное задание (делать по желанию)
 # Создать несколько (2-3) котов и подселить их в дом к человеку.
