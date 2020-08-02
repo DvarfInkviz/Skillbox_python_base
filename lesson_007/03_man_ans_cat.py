@@ -118,8 +118,8 @@ class Man:
         self.fullness -= 10
         cprint('{} Въехал в дом'.format(self.name), color='cyan')
 
-    def take_cat(self, cat, house, nickname):
-        self.cat = cat
+    def take_cat(self, _cat, house, nickname):
+        self.cat = _cat
         self.cat.house = house
         self.cat.name = nickname
         cprint('{} подобрал кота "{}"'.format(self.name, self.cat.name), color='cyan')
@@ -191,10 +191,10 @@ for citizen in citizens:
 day_x = randint(1, 50)
 my_cat = Cat()
 
-for day in range(1, 366):
+for day in range(1, 732):
     if day == day_x:
         for i, cat in enumerate(cats):
-            citizens[i].take_cat(cat=cat, house=my_sweet_home, nickname='Васька_'+str(i))
+            citizens[i].take_cat(_cat=cat, house=my_sweet_home, nickname='Васька_'+str(i))
     print('================ день {} =================='.format(day))
     for citizen in citizens:
         if citizen.fullness > 0:
@@ -217,7 +217,7 @@ for day in range(1, 366):
                 rips[cat.name] = day
     print(my_sweet_home)
     if len(rips) == len(citizens)+len(cats):
-        cprint('Все умерли... R.I.P.', color='red')
+        cprint('Все умерли на {} день. R.I.P.'.format(day), color='red')
         for item in rips.items():
             cprint('{} прожил {} дней'.format(item[0], item[1]), color='red')
         break
