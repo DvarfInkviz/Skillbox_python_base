@@ -45,6 +45,8 @@ class Cat:
         else:
             cprint('{}: нет еды в миске!'.format(self.name), color='red')
             self.fullness -= 10
+            if self.fullness <= 0:
+                cprint('{} умер... R.I.P.'.format(self.name), color='red')
 
     def cat_sleep(self):
         cprint('{} спал целый день'.format(self.name), color='green')
@@ -90,6 +92,8 @@ class Man:
         else:
             cprint('{}: нет еды!'.format(self.name), color='red')
             self.fullness -= 10
+            if self.fullness <= 0:
+                cprint('{} умер... R.I.P.'.format(self.name), color='red')
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='blue')
