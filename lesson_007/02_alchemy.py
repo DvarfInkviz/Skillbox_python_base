@@ -12,6 +12,8 @@
 #   Воздух + Огонь = Молния
 #   Воздух + Земля = Пыль
 #   Огонь + Земля = Лава
+
+
 class Water:
     def __str__(self):
         return 'Вода'
@@ -189,3 +191,5 @@ class Sauna:
 print(Human(), '+', Steam(), '=', Human() + Steam())
 print(Fire(), '+', Human(), '=', Fire() + Human())
 print(Earth(), '+', Human(), '=', Earth() + Human())
+
+# Зачёт!
