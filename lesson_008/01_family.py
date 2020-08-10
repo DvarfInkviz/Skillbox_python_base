@@ -222,6 +222,8 @@ cprint(f'Всего съедено: {serge.total_food}', color='yellow')
 cprint(f'Всего заработано: {serge.total_money}', color='yellow')
 cprint(f'Всего куплено шуб: {masha.total_fur_coat}', color='yellow')
 
+# TODO Переходите ко второй части задания.
+
 # Часть вторая
 #
 # После подтверждения учителем первой части надо
