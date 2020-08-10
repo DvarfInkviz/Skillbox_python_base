@@ -45,6 +45,8 @@ from termcolor import cprint
 
 
 class House:
+    no_food = False
+    no_money = False
 
     def __init__(self):
         self.food = 50
@@ -79,16 +81,32 @@ class Human:
             return
         self.dice = randint(1, 6)
 
+    def eat(self):
+        if self.house.food >= 10:
+            if self.house.food >= 30:
+                _b = 30
+            else:
+                _b = self.house.food
+            _count = randint(a=10, b=_b)
+            self.fullness += _count
+            self.total_food += _count
+            self.house.food -= _count
+            cprint(f'{self.name} поела (+{_count})', color='yellow')
+        else:
+            cprint(f'{self.name}: нет еды! Жене надо сходить в магазин! (-10)', color='red')
+            self.house.no_food = True
+            self.fullness -= 10
+            if self.fullness <= 0:
+                cprint(f'{self.name} умерл... R.I.P.', color='red')
+
 
 class Husband(Human):
     total_money = 0
-    no_food = False
-    no_money = False
 
     def act(self):
         super().act()
         if (self.fullness > 0) and (self.happiness > 10):
-            if self.no_money:
+            if self.house.no_money:
                 self.work()
             elif self.fullness <= 20:
                 self.eat()
@@ -101,30 +119,12 @@ class Husband(Human):
             else:
                 self.gaming()
 
-    def eat(self):
-        if self.house.food >= 10:
-            if self.house.food >= 30:
-                _b = 30
-            else:
-                _b = self.house.food
-            _count = randint(a=10, b=_b)
-            self.fullness += _count
-            self.total_food += _count
-            self.house.food -= _count
-            cprint(f'{self.name} поел (+{_count})', color='yellow')
-        else:
-            cprint(f'{self.name}: нет еды! Жена, сходи в магазин! (-10)', color='red')
-            self.no_food = True
-            self.fullness -= 10
-            if self.fullness <= 0:
-                cprint(f'{self.name} умер от голода... R.I.P.', color='red')
-
     def work(self):
         cprint(f'{self.name} сходил на работу (-10, +150)', color='blue')
         self.house.money += 150
         self.total_money += 150
         self.fullness -= 10
-        self.no_money = False
+        self.house.no_money = False
 
     def gaming(self):
         cprint(f'{self.name} играл WoT целый день (-10, +20)', color='green')
@@ -138,7 +138,7 @@ class Wife(Human):
     def act(self):
         super().act()
         if (self.fullness > 0) and (self.happiness > 10):
-            if Husband.no_food:
+            if self.house.no_food:
                 self.shopping()
             elif self.fullness <= 20:
                 self.eat()
@@ -150,27 +150,7 @@ class Wife(Human):
                 self.shopping()
             elif self.dice > 3:
                 self.eat()
-            # else:
-            #     self.clean_house()
             self.house.dirt += 5
-
-    def eat(self):
-        if self.house.food >= 10:
-            if self.house.food >= 30:
-                _b = 30
-            else:
-                _b = self.house.food
-            _count = randint(a=10, b=_b)
-            self.fullness += _count
-            self.total_food += _count
-            self.house.food -= _count
-            cprint(f'{self.name} поела (+{_count})', color='yellow')
-        else:
-            cprint(f'{self.name}: нет еды! Надо идти в магазин! (-10)', color='red')
-            Husband.no_food = True
-            self.fullness -= 10
-            if self.fullness <= 0:
-                cprint(f'{self.name} умерла... R.I.P.', color='red')
 
     def shopping(self):
         if self.house.money >= 30:
@@ -182,10 +162,10 @@ class Wife(Human):
             self.house.money -= _count
             self.house.food += _count
             cprint(f'{self.name} сходила в магазин за едой (-10, +{_count})', color='magenta')
-            Husband.no_food = False
+            self.house.no_food = False
         else:
             cprint(f'{self.name}: денег мало! Муж, иди работать! (-10)', color='red')
-            Husband.no_money = True
+            self.house.no_money = True
         self.fullness -= 10
 
     def buy_fur_coat(self):
@@ -196,7 +176,7 @@ class Wife(Human):
             self.happiness += 60
         else:
             cprint(f'{self.name}: мне грустно, хочу шубу, а денег мало! Муж, иди работать! (-10)', color='red')
-            Husband.no_money = True
+            self.house.no_money = True
         self.fullness -= 10
 
     def clean_house(self):
