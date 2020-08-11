@@ -275,6 +275,8 @@ class Child(Human):
         cprint(f'{self.name} спал целый день (-10)', color='green')
         self.fullness -= 5
 
+# TODO Ветка master готова к слиянию.
+
 
 home = House()
 serge = Husband(name='Сережа')
