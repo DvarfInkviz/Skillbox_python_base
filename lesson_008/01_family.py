@@ -71,7 +71,7 @@ class Human:
         return f'Я - {self.name}, сытость {self.fullness}, счастье {self.happiness}'
 
     def act(self):
-        if self.house.dirt > 90:
+        if (self.house.dirt > 90) and (self.__class__ != Child):
             self.happiness -= 10
         if self.fullness <= 0:
             cprint(f'{self.name} умер от голода... R.I.P.', color='red')
@@ -91,13 +91,13 @@ class Human:
             self.fullness += _count
             self.total_food += _count
             self.house.food -= _count
-            cprint(f'{self.name} поела (+{_count})', color='yellow')
+            cprint(f'{self.name} поел (+{_count})', color='yellow')
         else:
             cprint(f'{self.name}: нет еды! Жене надо сходить в магазин! (-10)', color='red')
             self.house.no_food = True
             self.fullness -= 10
             if self.fullness <= 0:
-                cprint(f'{self.name} умерл... R.I.P.', color='red')
+                cprint(f'{self.name} умер от голода... R.I.P.', color='red')
 
 
 class Husband(Human):
@@ -191,39 +191,6 @@ class Wife(Human):
         cprint(f'{self.name} убиралась в доме (-10, -{_count})', color='magenta')
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-rips = {}
-cprint(home, color='cyan')
-cprint(serge, color='cyan')
-cprint(masha, color='cyan')
-
-for day in range(1, 366):
-    cprint(f'================== День {day} ==================', color='red')
-    serge.act()
-    masha.act()
-    if (serge.fullness > 0) and (serge.happiness > 10):
-        cprint(serge, color='cyan')
-    elif serge.name not in rips:
-        rips[serge.name] = day
-    if (masha.fullness > 0) and (masha.happiness > 10):
-        cprint(masha, color='cyan')
-    elif masha.name not in rips:
-        rips[masha.name] = day
-    cprint(home, color='cyan')
-    if len(rips) == 2:
-        cprint(f'Все умерли на {day} день. R.I.P.', color='red')
-        for item in rips.items():
-            cprint(f'{item[0]} прожил(а) {item[1]} дней', color='red')
-        break
-
-cprint(f'Всего съедено: {serge.total_food}', color='yellow')
-cprint(f'Всего заработано: {serge.total_money}', color='yellow')
-cprint(f'Всего куплено шуб: {masha.total_fur_coat}', color='yellow')
-
-# TODO Переходите ко второй части задания.
-
 # Часть вторая
 #
 # После подтверждения учителем первой части надо
@@ -278,22 +245,81 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
-
-    def __init__(self):
-        pass
-
-    def __str__(self):
-        return super().__str__()
+class Child(Human):
 
     def act(self):
-        pass
+        super().act()
+        if self.fullness > 0:
+            if self.fullness <= 20:
+                self.eat()
+            elif self.dice > 3:
+                self.eat()
+            else:
+                self.sleep()
 
     def eat(self):
-        pass
+        if self.house.food >= 5:
+            _count = randint(a=5, b=10)
+            self.fullness += _count
+            self.total_food += _count
+            self.house.food -= _count
+            cprint(f'{self.name} поел (+{_count})', color='yellow')
+        else:
+            cprint(f'{self.name}: нет еды! Маме надо сходить в магазин! (-5)', color='red')
+            self.house.no_food = True
+            self.fullness -= 5
+            if self.fullness <= 0:
+                cprint(f'{self.name} умер от голода... R.I.P.', color='red')
 
     def sleep(self):
-        pass
+        cprint(f'{self.name} спал целый день (-10)', color='green')
+        self.fullness -= 5
+
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+cprint(home, color='cyan')
+cprint(serge, color='cyan')
+cprint(masha, color='cyan')
+
+day = 1
+rips = {}
+
+while True:  # сделал бесконечный цикл, чтобы видеть сколько они смогут прожить (max видел 2025 дней)
+    cprint(f'================== День {day} ==================', color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+
+    if (serge.fullness > 0) and (serge.happiness > 10):
+        cprint(serge, color='cyan')
+    elif serge.name not in rips:
+        rips[serge.name] = day
+
+    if (masha.fullness > 0) and (masha.happiness > 10):
+        cprint(masha, color='cyan')
+    elif masha.name not in rips:
+        rips[masha.name] = day
+
+    if kolya.fullness > 0:
+        cprint(kolya, color='cyan')
+    elif kolya.name not in rips:
+        rips[kolya.name] = day
+
+    cprint(home, color='cyan')
+    if len(rips) == 3:
+        cprint(f'Все умерли на {day} день. R.I.P.', color='red')
+        for item in rips.items():
+            cprint(f'{item[0]} прожил(а) {item[1]} дней', color='red')
+        break
+    else:
+        day += 1
+
+cprint(f'Всего съедено: {serge.total_food}', color='yellow')
+cprint(f'Всего заработано: {serge.total_money}', color='yellow')
+cprint(f'Всего куплено шуб: {masha.total_fur_coat}', color='yellow')
 
 
 #  после реализации второй части - отдать на проверку учителем две ветки
