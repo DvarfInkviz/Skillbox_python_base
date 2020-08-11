@@ -287,6 +287,7 @@ class Cat:
         self.fullness -= 10
         self.house.dirt += 5
 
+# TODO Ветка develop готова к слиянию.
 
 home = House()
 serge = Husband(name='Сережа')
