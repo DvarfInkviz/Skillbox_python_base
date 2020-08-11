@@ -41,10 +41,9 @@ class Statistic:
         if self.file_name.endswith('.zip'):
             self.unzip()
         self.collect()
-        # if self.sort_type == 'value':
         self.refactor_stat()
-        # print(self)
-        # print('+---------+----------+')
+        print(self)
+        print('+---------+----------+')
 
     def unzip(self):
         _filename = []
@@ -58,8 +57,6 @@ class Statistic:
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for i, line in enumerate(file):
                 self._collect_for_line(line=line[:-1])
-                if i == 100:
-                    break
 
     def _collect_for_line(self, line):
         for char in line:
@@ -71,38 +68,27 @@ class Statistic:
 
     def refactor_stat(self):
         self.sort_stat = {}
-        # for k in self.stat:
-        #     print(k, end=' ')
-        for k in sorted(self.stat):
-            print(k, end=' ')
         _eng_rus = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' \
                    'abcdefghijklmnopqrstuvwxyz' \
                    'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ' \
-                   'абвгдеёжзийклмнопрстуфхцчшщъьэюя'
-        self.sort_stat = {_eng_rus[k]: self.stat[_eng_rus[k]] for k in sorted(self.stat, key=lambda x: _eng_rus.index(x))}
-        print(self.sort_stat)
-        # if self.sort_type == 'value':
-        self.sort_stat = {k: self.stat[k] for k in sorted(self.stat, key=self.stat.__getitem__, reverse=False)}
-        print()
-        print(self.sort_stat)
-        # else:
-        #     self.sort_stat = sorted(self.stat, key=lambda x: _eng_rus.index(x))
+                   'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+# TODO следующие выражения большие, но составил их сам. Сначала гуглил сортировку, но точных и понятных мне
+#  результатов получить не смог. Поэтому начал сортировал словарь постепенно и смотреть, что получается на каждом шаге.
+#  В итоге получились конструкции практически в одну строку.
+#  Этот метод помог сократить лишний код - убрать проверки if-else
+        if self.sort_type == 'value':
+            self.sort_stat = {item: self.stat[item] for item in
+                              sorted(self.stat, key=self.stat.__getitem__, reverse=self.sort_order)}
+        else:
+            self.sort_stat = {_eng_rus[item]: self.stat[_eng_rus[item]] for item in
+                              sorted([_eng_rus.index(item) for item in sorted(self.stat)], reverse=self.sort_order)}
 
     def __str__(self):
         _total = 0
         print('+---------+----------+\n|  буква  | частота  |\n+---------+----------+')
-        # if self.sort_type == 'value':
-        #     for item in self.sort_stat.items():
-        #         print(f'|{item[0]:^9}|{item[1]:^10d}|')
-        #         _total += item[1]
-        # elif not self.sort_order:
-        #     for item in reversed(sorted(self.stat.items())):
-        #         print(f'|{item[0]:^9}|{item[1]:^10d}|')
-        #         _total += item[1]
-        # else:
-        #     for item in sorted(self.stat.items()):
-        #         print(f'|{item[0]:^9}|{item[1]:^10d}|')
-        #         _total += item[1]
+        for item in self.sort_stat.items():
+            print(f'|{item[0]:^9}|{item[1]:^10d}|')
+            _total += item[1]
         print('+---------+----------+')
         return f'|  ИТОГО  |{_total:^10d}|'
 
@@ -116,16 +102,16 @@ new_stat.run()
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
 #  - по алфавиту по убыванию
-# text = ' по частоте по возрастанию '
-# print(f'{text:#^30}')
-# new_stat.sort_order = False
-# new_stat.run()
-# text = ' по алфавиту по возрастанию '
-# print(f'{text:#^30}')
-# new_stat.sort_order = False
-# new_stat.sort_type = 'key'
-# new_stat.run()
-# text = ' по алфавиту по убыванию '
-# print(f'{text:#^30}')
-# new_stat.sort_order = True
-# new_stat.run()
+text = ' по частоте по возрастанию '
+print(f'{text:#^30}')
+new_stat.sort_order = False
+new_stat.run()
+text = ' по алфавиту по возрастанию '
+print(f'{text:#^30}')
+new_stat.sort_order = False
+new_stat.sort_type = 'key'
+new_stat.run()
+text = ' по алфавиту по убыванию '
+print(f'{text:#^30}')
+new_stat.sort_order = True
+new_stat.run()
