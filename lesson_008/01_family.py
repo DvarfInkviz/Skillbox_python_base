@@ -2,8 +2,6 @@
 
 from random import randint
 
-from termcolor import cprint
-
 
 # Часть первая
 #
@@ -375,6 +373,9 @@ class Simulation:
         self.food_incidents = []
         self.money_incidents = []
         self.max_cats = 0
+        # TODO Возможно будет проще использовать другую функцию из библиотеки random:
+        #  random.sample(range(365), food_incident)
+        #  Так вы получите список с номерами дней, когда должен произойти инцидент.
         for _ in range(_money_incidents):
             self.money_incidents.append(randint(1, 366))
         for _ in range(_food_incidents):
@@ -424,6 +425,8 @@ class Simulation:
 #
 # в итоге должен получится приблизительно такой код экспериментов
 
+# TODO Можно объединить два цикла в один, используя функцию product из библиотеки itertools:
+#  for food_incidents, money_incidents in itertools.product(range(6), range(6))
 for food_incidents in range(1, 6):
     for money_incidents in range(1, 6):
         life = Simulation(money_incidents, food_incidents)
