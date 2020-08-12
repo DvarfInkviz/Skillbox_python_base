@@ -54,10 +54,10 @@ class House:
     total_fur_coat = 0
 
     def __init__(self):
-        self.food = 50
+        self.food = 90
         self.money = 100
         self.dirt = 0
-        self.cat_food = 30
+        self.cat_food = 90
 
     def __str__(self):
         return f'В доме еды осталось {self.food}, денег осталось {self.money}, грязи {self.dirt}'
@@ -67,7 +67,7 @@ class Human:
 
     def __init__(self, name):
         self.name = name
-        self.fullness = 30
+        self.fullness = 50
         self.happiness = 100
         self.house = home
         self.dice = 0
@@ -97,12 +97,15 @@ class Human:
             self.house.total_food += _count
             self.house.food -= _count
             # cprint(f'{self.name} поел (+{_count})', color='yellow')
+            if self.house.food < 50:
+                # cprint(f'Мало еды! Жена должна сходить в магазин! (-10)', color='red')
+                self.house.no_food = True
         else:
             # cprint(f'{self.name}: нет еды! Жена должна сходить в магазин! (-10)', color='red')
             self.house.no_food = True
             self.fullness -= 10
             # if self.fullness <= 0:
-            #     cprint(f'{self.name} умер от голода... R.I.P.', color='red')
+                # cprint(f'{self.name} умер от голода... R.I.P.', color='red')
 
     def pet_the_cat(self):
         self.happiness += 5
@@ -275,6 +278,9 @@ class Cat:
             self.house.total_cat_food += _count
             self.house.cat_food -= _count
             # cprint(f'{self.name} поел', color='yellow')
+            if self.house.cat_food < 50:
+                # cprint(f'{self.name}: мало еды в миске!', color='red')
+                self.house.no_cat_food = True
         else:
             # cprint(f'{self.name}: нет еды в миске!', color='red')
             self.house.no_cat_food = True
@@ -375,31 +381,31 @@ class Simulation:
             self.food_incidents.append(randint(1, 366))
 
     def __str__(self):
-        return f'food_incidents_days={self.food_incidents}, money_incidents_days={self.money_incidents}'
+        return f'food_incidents_days={self.food_incidents}, money_incidents_days={self.money_incidents}, ' \
+               f'salary={Husband.salary}'
 
     def experiment(self, _salary):
         Husband.salary = _salary
         self.max_cats = len(cats)
         for _day in range(1, 366):
-            if _day in self.food_incidents:
-                House.total_food = 0
-            if _day in self.money_incidents:
-                House.total_money /= 2
-            for _citizen in citizens:
-                _citizen.act()
-            for _cat in cats:
-                _cat.act()
-            for _citizen in citizens:
-                if _citizen.fullness <= 0 and _citizen.name not in rips:
-                    rips[_citizen.name] = _day
-            for _cat in cats:
-                if _cat.fullness <= 0 and _cat.name not in rips:
-                    self.max_cats -= 1
-                    rips[_cat.name] = _day
-            if len(rips) == len(citizens) + len(cats):
-                cprint(f'Все умерли на {_day} день. R.I.P.', color='red')
-                return self.max_cats
-        return self.max_cats
+            if self.max_cats > 0:
+                if _day in self.food_incidents:
+                    House.total_food = 0
+                if _day in self.money_incidents:
+                    House.total_money //= 2
+                for _citizen in citizens:
+                    _citizen.act()
+                for _cat in cats:
+                    _cat.act()
+                for _cat in cats:
+                    if _cat.fullness <= 0:
+                        if _cat.name not in rips:
+                            self.max_cats -= 1
+                            rips[_cat.name] = _day
+            if self.max_cats == 0:
+                return f'При зарплате {Husband.salary} все коты умерли на {_day} день. R.I.P.'
+        if self.max_cats > 0:
+            return f'При зарплате {Husband.salary} максимально можно прокормить {self.max_cats} котов'
 
 
 # Усложненное задание (делать по желанию)
@@ -434,7 +440,4 @@ for food_incidents in range(1, 6):
                 Cat(name='Шнурок'),
             ]
             rips = {}
-            # print(life)
-            max_cats = life.experiment(salary)
-            if max_cats > 0:
-                print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
+            print(life.experiment(salary))
