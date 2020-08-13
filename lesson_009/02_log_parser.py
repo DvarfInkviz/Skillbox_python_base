@@ -58,9 +58,9 @@ class LogParser:
 
     def unzip(self):
         _filename = []
-        _zip_file = zipfile.ZipFile(self.log_file, 'r')
-        for _filename in _zip_file.namelist():
-            _zip_file.extract(_filename)
+        with zipfile.ZipFile(self.log_file, 'r') as _zip_file:
+            for _filename in _zip_file.namelist():
+                _zip_file.extract(_filename)
         self.log_file = _filename
 
     def parse_file(self):

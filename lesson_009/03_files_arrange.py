@@ -3,6 +3,8 @@
 import os
 import time
 import shutil
+import zipfile
+
 
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
 # Скрипт должен разложить файлы из одной папки по годам и месяцам в другую.
@@ -40,10 +42,48 @@ import shutil
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO здесь ваш код
+
+class FileSorter:
+
+    def __init__(self, _scan_dir):
+        self.scan_dir = os.path.normpath(_scan_dir)
+        self.result_dir = 'icons_by_year'
+
+    def run(self):
+        if self.scan_dir.endswith('.zip'):
+            self.unzip()
+        else:
+            self.scan()
+        print('All Done!')
+
+    def unzip(self):
+        with zipfile.ZipFile(self.scan_dir, 'r') as _zip_file:
+            for _file in _zip_file.infolist():
+                if _file.filename[-1] != '/':
+                    _file.filename = os.path.basename(_file.filename)
+                    _dst = os.path.join(self.result_dir, str(_file.date_time[0]), str(_file.date_time[1]))
+                    os.makedirs(name=_dst, exist_ok=True)
+                    _zip_file.extract(member=_file, path=_dst)
+
+    def scan(self):
+        for _dirpath, _dirnames, _filenames in os.walk(self.scan_dir):
+            for _file in _filenames:
+                _full_file_path = os.path.join(_dirpath, _file)
+                _secs = os.path.getmtime(_full_file_path)
+                _file_time = time.gmtime(_secs)
+                _dst = os.path.join(self.result_dir, str(_file_time[0]), str(_file_time[1]))
+                os.makedirs(name=_dst, exist_ok=True)
+                shutil.copy2(src=_full_file_path, dst=_dst)
+
+
+new_sort = FileSorter(_scan_dir='icons')
+new_sort.run()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
 # Это относится только к чтению файлов в архиве. В случае паттерна "Шаблонный метод" изменяется способ
 # получения данных (читаем os.walk() или zip.namelist и т.д.)
 # Документация по zipfile: API https://docs.python.org/3/library/zipfile.html
+#
+new_sort = FileSorter(_scan_dir='icons.zip')
+new_sort.run()

@@ -46,9 +46,9 @@ class Statistic:
 
     def unzip(self):
         _filename = []
-        _zip_file = zipfile.ZipFile(self.file_name, 'r')
-        for _filename in _zip_file.namelist():
-            _zip_file.extract(_filename)
+        with zipfile.ZipFile(self.file_name, 'r') as _zip_file:
+            for _filename in _zip_file.namelist():
+                _zip_file.extract(_filename)
         self.file_name = _filename
 
     def collect(self):
