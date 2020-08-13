@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+import itertools
 
-from random import randint
-
+from random import randint, sample
 
 # Часть первая
 #
@@ -103,7 +103,7 @@ class Human:
             self.house.no_food = True
             self.fullness -= 10
             # if self.fullness <= 0:
-                # cprint(f'{self.name} умер от голода... R.I.P.', color='red')
+            # cprint(f'{self.name} умер от голода... R.I.P.', color='red')
 
     def pet_the_cat(self):
         self.happiness += 5
@@ -373,13 +373,8 @@ class Simulation:
         self.food_incidents = []
         self.money_incidents = []
         self.max_cats = 0
-        # TODO Возможно будет проще использовать другую функцию из библиотеки random:
-        #  random.sample(range(365), food_incident)
-        #  Так вы получите список с номерами дней, когда должен произойти инцидент.
-        for _ in range(_money_incidents):
-            self.money_incidents.append(randint(1, 366))
-        for _ in range(_food_incidents):
-            self.food_incidents.append(randint(1, 366))
+        self.food_incident = sample(range(1, 366), _food_incidents)
+        self.money_incident = sample(range(1, 366), _money_incidents)
 
     def __str__(self):
         return f'food_incidents_days={self.food_incidents}, money_incidents_days={self.money_incidents}, ' \
@@ -425,22 +420,19 @@ class Simulation:
 #
 # в итоге должен получится приблизительно такой код экспериментов
 
-# TODO Можно объединить два цикла в один, используя функцию product из библиотеки itertools:
-#  for food_incidents, money_incidents in itertools.product(range(6), range(6))
-for food_incidents in range(1, 6):
-    for money_incidents in range(1, 6):
-        life = Simulation(money_incidents, food_incidents)
-        for salary in range(50, 401, 50):
-            home = House()
-            citizens = [
-                Husband(name='Сережа'),
-                Wife(name='Маша'),
-                Child(name='Коля'),
-            ]
-            cats = [
-                Cat(name='Мурзик'),
-                Cat(name='Васька'),
-                Cat(name='Шнурок'),
-            ]
-            rips = {}
-            print(life.experiment(salary))
+for food_incidents, money_incidents in itertools.product(range(6), range(6)):
+    life = Simulation(money_incidents, food_incidents)
+    for salary in range(50, 401, 50):
+        home = House()
+        citizens = [
+            Husband(name='Сережа'),
+            Wife(name='Маша'),
+            Child(name='Коля'),
+        ]
+        cats = [
+            Cat(name='Мурзик'),
+            Cat(name='Васька'),
+            Cat(name='Шнурок'),
+        ]
+        rips = {}
+        print(life.experiment(salary))
