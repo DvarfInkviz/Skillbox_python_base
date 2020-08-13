@@ -43,7 +43,6 @@ class Statistic:
         self.collect()
         self.refactor_stat()
         print(self)
-        print('+---------+----------+')
 
     def unzip(self):
         _filename = []
@@ -55,7 +54,7 @@ class Statistic:
     def collect(self):
         self.stat = {}
         with open(self.file_name, 'r', encoding='cp1251') as file:
-            for i, line in enumerate(file):
+            for line in file:
                 self._collect_for_line(line=line[:-1])
 
     def _collect_for_line(self, line):
@@ -87,15 +86,15 @@ class Statistic:
         _total = 0
         print('+---------+----------+\n|  буква  | частота  |\n+---------+----------+')
         for item in self.sort_stat.items():
-            print(f'|{item[0]:^9}|{item[1]:^10d}|')
+            print(f'|{item[0]:^9}|{item[1]:>8d}  |')
             _total += item[1]
         print('+---------+----------+')
-        return f'|  ИТОГО  |{_total:^10d}|'
+        return f'|  ИТОГО  |{_total:^10d}|\n+---------+----------+'
 
 
 new_stat = Statistic(_file_name='python_snippets\\voyna-i-mir.txt.zip', _sort_order=True, _sort_type='value')
 text = ' по частоте по убыванию '
-print(f'{text:#^50}')
+print(f'{text:#^30}')
 new_stat.run()
 
 # После зачета первого этапа нужно сделать упорядочивание статистики
@@ -108,7 +107,6 @@ new_stat.sort_order = False
 new_stat.run()
 text = ' по алфавиту по возрастанию '
 print(f'{text:#^30}')
-new_stat.sort_order = False
 new_stat.sort_type = 'key'
 new_stat.run()
 text = ' по алфавиту по убыванию '
