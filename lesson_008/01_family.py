@@ -436,3 +436,5 @@ for food_incidents, money_incidents in itertools.product(range(6), range(6)):
         ]
         rips = {}
         print(life.experiment(salary))
+
+# Зачёт!
