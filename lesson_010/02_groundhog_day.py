@@ -19,6 +19,9 @@
 from random import randint
 
 
+# TODO Для исключений, созданных в этом задании лучше сделать общий родительский класс,
+#  например MainException, унаследованный от Exception, от которого нужно
+#  наследовать остальные а в except перехватывать общее исключение MainException.
 class IamGodError(Exception):
     pass
 
@@ -57,6 +60,10 @@ def one_day(_carma):
     _dice = randint(1, 13)
     if _dice < 8:
         _carma += _dice
+
+    # TODO Можно упростить код с условиями:
+    #  Перечислить исключения в списке или кортеже, случайно выбирать один
+    #  из элементов списка и вызывать полученное исключение.
     elif _dice == 8:
         raise IamGodError('был Богом')
     elif _dice == 9:
@@ -75,6 +82,8 @@ def one_day(_carma):
 while carma < ENLIGHTENMENT_CARMA_LEVEL:
     try:
         carma = one_day(_carma=carma)
+    # TODO Если сделать общий класс для всех ошибок, то в следующей строке
+    #  можно будет перехватывать только одно общее исключение.
     except IamGodError as exc:
         write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
     except DrunkError as exc:
