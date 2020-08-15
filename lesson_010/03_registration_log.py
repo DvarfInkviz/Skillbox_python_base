@@ -21,6 +21,8 @@
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
+import os
+
 
 class NotNameError(Exception):
     pass
@@ -31,7 +33,7 @@ class NotEmailError(Exception):
 
 
 def _write_log(_message, _file):
-    with open(_file, 'a', encoding='UTF8') as file:
+    with open(os.path.normpath(_file), 'a', encoding='UTF8') as file:
         file.write(f'{_message}\n')
 
 
@@ -56,7 +58,7 @@ def _parse_line(_line):
 class LogParser:
 
     def __init__(self, _log_file):
-        self.log_file = _log_file
+        self.log_file = os.path.normpath(_log_file)
         self.good_log = 'registrations_good.log'
         self.bad_log = 'registrations_bad.log'
 
