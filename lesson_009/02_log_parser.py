@@ -32,24 +32,14 @@ class LogParser:
         self.event = _event
         if self.event != 'OK' and self.event != 'NOK':
             self.event = 'NOK'
-        # TODO Для выбора вариантов группировки оптимальнее будет использовать словарь
-        #  с ключами yy, mm, ... В значениях словаря нужно будет сохранить число для
-        #  self.group_type и слово для вставки в сообщение (годам, месяцам, ...)
-        if _group_type == 'yy':
-            print(f'Группировка событий {self.event} будет проходить по годам!')
-            self.group_type = 5
-        elif _group_type == 'mm':
-            print(f'Группировка событий {self.event} будет проходить по месяцам!')
-            self.group_type = 8
-        elif _group_type == 'h':
-            print(f'Группировка событий {self.event} будет проходить по часам!')
-            self.group_type = 14
-        elif _group_type == 'm':
-            print(f'Группировка событий {self.event} будет проходить по минутам!')
-            self.group_type = 17
-        else:
-            print(f'Группировка событий {self.event} будет проходить по минутам!')
-            self.group_type = 17
+        self.group_var = {
+            'yy': [5, 'годам'],
+            'mm': [8, 'месяцам'],
+            'h': [14, 'часам'],
+            'm': [17, 'минутам']
+        }
+        self.group_type = self.group_var.get(_group_type, [17, 'минутам'])
+        print(f'Группировка событий {self.event} будет проходить по {self.group_type[1]}!')
         self.result_file = f'events_{self.event}_{_group_type}.txt'
         self.log = {}
 
@@ -70,11 +60,11 @@ class LogParser:
         with open(self.log_file, 'r', encoding='UTF8') as file:
             for line in file:
                 self._parse_line(line=line[:-1])
-            self._write_result()
+        self._write_result()
 
     def _parse_line(self, line):
         if self.event in line:
-            _date = line[:self.group_type]
+            _date = line[:self.group_type[0]]
             if _date in self.log:
                 self.log[_date] += 1
             elif len(self.log) > 1:
@@ -84,8 +74,10 @@ class LogParser:
                 self.log[_date] = 1
 
     def _write_result(self):
-        # TODO Открывать файл для записи каждой отдельной строки достаточно ресурсозатратно.
+        # Открывать файл для записи каждой отдельной строки достаточно ресурсозатратно.
         #  Можно открыть файл для записи одн раз до начала цикла.
+        # TODO данная функция вызывалась после чтения всего файла один раз, но до закрытия анализируемого файла
+        #  сейчас переместил вызов и вызывается он после закрытия анализируемого файла
         with open(self.result_file, 'a', encoding='UTF8') as file:
             for item in self.log.items():
                 file.write(f'{item[0]}] {item[1]}\n')
