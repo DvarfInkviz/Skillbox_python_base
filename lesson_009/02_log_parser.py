@@ -32,6 +32,9 @@ class LogParser:
         self.event = _event
         if self.event != 'OK' and self.event != 'NOK':
             self.event = 'NOK'
+        # TODO Для выбора вариантов группировки оптимальнее будет использовать словарь
+        #  с ключами yy, mm, ... В значениях словаря нужно будет сохранить число для
+        #  self.group_type и слово для вставки в сообщение (годам, месяцам, ...)
         if _group_type == 'yy':
             print(f'Группировка событий {self.event} будет проходить по годам!')
             self.group_type = 5
@@ -81,6 +84,8 @@ class LogParser:
                 self.log[_date] = 1
 
     def _write_result(self):
+        # TODO Открывать файл для записи каждой отдельной строки достаточно ресурсозатратно.
+        #  Можно открыть файл для записи одн раз до начала цикла.
         with open(self.result_file, 'a', encoding='UTF8') as file:
             for item in self.log.items():
                 file.write(f'{item[0]}] {item[1]}\n')
