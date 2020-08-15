@@ -16,9 +16,79 @@
 # кармы до уровня ENLIGHTENMENT_CARMA_LEVEL. Исключения обработать и записать в лог.
 # При создании собственных исключений максимально использовать функциональность
 # базовых встроенных исключений.
+from random import randint
+
+
+class IamGodError(Exception):
+    pass
+
+
+class DrunkError(Exception):
+    pass
+
+
+class CarCrashError(Exception):
+    pass
+
+
+class GluttonyError(Exception):
+    pass
+
+
+class DepressionError(Exception):
+    pass
+
+
+class SuicideError(Exception):
+    pass
+
 
 ENLIGHTENMENT_CARMA_LEVEL = 777
+carma = 0
+day = 1
 
-# TODO здесь ваш код
+
+def write_log(_message):
+    with open('02_groundhog_day.log', 'a', encoding='UTF8') as file:
+        file.write(f'{_message}\n')
+
+
+def one_day(_carma):
+    _dice = randint(1, 13)
+    if _dice < 8:
+        _carma += _dice
+    elif _dice == 8:
+        raise IamGodError('был Богом')
+    elif _dice == 9:
+        raise DrunkError('напился')
+    elif _dice == 10:
+        raise CarCrashError('разбился на машине')
+    elif _dice == 11:
+        raise GluttonyError('обожрался')
+    elif _dice == 12:
+        raise DepressionError('был в депрессии')
+    elif _dice == 13:
+        raise SuicideError('покнчил жизнь самоубийтсвом')
+    return _carma
+
+
+while carma < ENLIGHTENMENT_CARMA_LEVEL:
+    try:
+        carma = one_day(_carma=carma)
+    except IamGodError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    except DrunkError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    except CarCrashError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    except GluttonyError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    except DepressionError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    except SuicideError as exc:
+        write_log(f'Необычный {day} день! Он {exc.args[0]} (Карма ={carma})')
+    finally:
+        day += 1
+print(f'Достиг просветления за {day-1} дней')
 
 # https://goo.gl/JnsDqu
