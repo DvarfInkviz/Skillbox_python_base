@@ -24,14 +24,16 @@
 # Для этого пригодится шаблон проектирование "Шаблонный метод"
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
-
+import operator
+import os
 import zipfile
+from collections import Counter
 
 
 class Statistic:
 
     def __init__(self, _file_name, _sort_order, _sort_type):
-        self.file_name = _file_name
+        self.file_name = os.path.normpath(_file_name)
         self.stat = {}
         self.sort_stat = {}
         self.sort_order = _sort_order
@@ -52,24 +54,12 @@ class Statistic:
         self.file_name = _filename
 
     def collect(self):
-        self.stat = {}
+        _cnt = Counter('')
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for line in file:
-                self._collect_for_line(line=line[:-1])
-
-    def _collect_for_line(self, line):
-        for char in line:
-            if char.isalpha():
-                # TODO Подобная конструкций со словарём может
-                #  быть значительно упрощена, если заменить словарь на
-                #  defaultdict или Counter из библиотеки collections. Нужно будет
-                #  в функции __init__ заменить {} на collections.defaultdict(int),
-                #  а из следующих 4 строк оставить одну с +=. Похожим способом можно
-                #  применить collections.Counter
-                if char in self.stat:
-                    self.stat[char] += 1
-                else:
-                    self.stat[char] = 1
+                _str = "".join(x for x in line if x.isalpha())
+                _cnt += Counter(_str)
+        self.stat = dict(_cnt)
 
     def refactor_stat(self):
         self.sort_stat = {}
@@ -77,37 +67,28 @@ class Statistic:
                    'abcdefghijklmnopqrstuvwxyz' \
                    'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ' \
                    'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-#  следующие выражения большие, но составил их сам. Сначала гуглил сортировку, но точных и понятных мне
-#  результатов получить не смог. Поэтому начал сортировал словарь постепенно и смотреть, что получается на каждом шаге.
-#  В итоге получились конструкции практически в одну строку.
-#  Этот метод помог сократить лишний код - убрать проверки if-else
-        # TODO Можно упростить сортировку словаря с данным, если использовать функцию
-        #  operator.itemgetter(0 или 1 в зависимости от того, сортируем по ключам или значениям),
-        #  которую нужно использовать в аргументе key функции sorted.
-        #  У этого способа есть одна проблема: буква ё окажется в самом конце.
-        #  Эту проблему можно не решать но если хотите предлагаю такой вариант:
-        #  - Сделать пустой словарь из ключей _eng_rus: sort_stat = dict.fromkeys(_eng_rus)
-        #  - обновить его значениями из словаря со статистикой sort_stat.update(self.stat)
         if self.sort_type == 'value':
             self.sort_stat = {item: self.stat[item] for item in
                               sorted(self.stat, key=self.stat.__getitem__, reverse=self.sort_order)}
         else:
-            self.sort_stat = {_eng_rus[item]: self.stat[_eng_rus[item]] for item in
-                              sorted([_eng_rus.index(item) for item in sorted(self.stat)], reverse=self.sort_order)}
+            if self.sort_order:
+                self.sort_stat = dict.fromkeys(reversed(_eng_rus))
+            else:
+                self.sort_stat = dict.fromkeys(_eng_rus)
+            self.sort_stat.update(self.stat)
 
     def __str__(self):
         _total = 0
         print('+---------+----------+\n|  буква  | частота  |\n+---------+----------+')
         for item in self.sort_stat.items():
-            print(f'|{item[0]:^9}|{item[1]:>8d}  |')
-            _total += item[1]
+            if item[1] is not None:
+                print(f'|{item[0]:^9}|{item[1]:>8d}  |')
+                _total += item[1]
         print('+---------+----------+')
         return f'|  ИТОГО  |{_total:^10d}|\n+---------+----------+'
 
 
-# TODO Используйте относительные пути и библиотеку os.path или pathlib для формирования
-#  корректных путей к файлам. Задание должно корректно запускаться без редактирования кода.
-new_stat = Statistic(_file_name='python_snippets\\voyna-i-mir.txt.zip', _sort_order=True, _sort_type='value')
+new_stat = Statistic(_file_name='python_snippets/voyna-i-mir.txt.zip', _sort_order=True, _sort_type='value')
 text = ' по частоте по убыванию '
 print(f'{text:#^30}')
 new_stat.run()
