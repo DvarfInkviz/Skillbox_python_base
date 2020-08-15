@@ -87,3 +87,5 @@ new_sort.run()
 #
 new_sort = FileSorter(_scan_dir='icons.zip')
 new_sort.run()
+
+# Зачёт!
