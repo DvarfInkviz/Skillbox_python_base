@@ -24,6 +24,7 @@
 # Для этого пригодится шаблон проектирование "Шаблонный метод"
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
+import operator
 import os
 import zipfile
 from collections import Counter
@@ -58,9 +59,7 @@ class Statistic:
             for line in file:
                 _str = "".join(x for x in line if x.isalpha())
                 _cnt += Counter(_str)
-        # TODO Преобразование в dict можно и делать. Counter явлеятся
-        #  наследником класса dict
-        self.stat = dict(_cnt)
+        self.stat = _cnt
 
     def refactor_stat(self):
         self.sort_stat = {}
@@ -69,18 +68,11 @@ class Statistic:
                    'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ' \
                    'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
         if self.sort_type == 'value':
-            # TODO Попробуйте упростить выражение, преобразуя результат возвращаемый из sorted
-            #  обрато в словарь:
-            #  self.sort_stat = dict(sorted(self.stat.items(), key=operator.itemgetter(1), reverse=...)
-            self.sort_stat = {item: self.stat[item] for item in
-                              sorted(self.stat, key=self.stat.__getitem__, reverse=self.sort_order)}
+            self.sort_stat = dict(sorted(self.stat.items(), key=operator.itemgetter(1), reverse=self.sort_order))
         else:
-            # TODO Будет немного оптимальней в зависимости от условия развернуть
-            #  строку с буквами, а вызов dict.fromkeys оставить один.
             if self.sort_order:
-                self.sort_stat = dict.fromkeys(reversed(_eng_rus))
-            else:
-                self.sort_stat = dict.fromkeys(_eng_rus)
+                _eng_rus = reversed(_eng_rus)
+            self.sort_stat = dict.fromkeys(_eng_rus)
             self.sort_stat.update(self.stat)
 
     def __str__(self):

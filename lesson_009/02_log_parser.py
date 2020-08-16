@@ -57,10 +57,10 @@ class LogParser:
         self.log_file = _filename
 
     def parse_file(self):
-        with open(self.log_file, 'r', encoding='UTF8') as file:
-            for line in file:
+        with open(self.log_file, 'r', encoding='UTF8') as _file, open(self.result_file, 'a', encoding='UTF8') as _rfile:
+            for line in _file:
                 self._parse_line(line=line[:-1])
-        self._write_result()
+            self._write_result(_rfile)
 
     def _parse_line(self, line):
         if self.event in line:
@@ -68,24 +68,13 @@ class LogParser:
             if _date in self.log:
                 self.log[_date] += 1
             elif len(self.log) > 1:
-                self._write_result()
                 self.log[_date] = 1
             else:
                 self.log[_date] = 1
 
-    def _write_result(self):
-        # Открывать файл для записи каждой отдельной строки достаточно ресурсозатратно.
-        #  Можно открыть файл для записи одн раз до начала цикла.
-        #  данная функция вызывалась после чтения всего файла один раз, но до закрытия анализируемого файла
-        #  сейчас переместил вызов и вызывается он после закрытия анализируемого файла
-        # TODO Метод _write_result вызывается из метода _parse_line для каждой строки.
-        #  Если профилировать задание, то можно увидеть, что 30 процентов времени работы программы
-        #  заниает вызов функции open.
-        with open(self.result_file, 'a', encoding='UTF8') as file:
-            print(1)
-            for item in self.log.items():
-                file.write(f'{item[0]}] {item[1]}\n')
-            self.log.clear()
+    def _write_result(self, _file):
+        for item in self.log.items():
+            _file.write(f'{item[0]}] {item[1]}\n')
 
 
 new_log = LogParser(_log_file='events.txt', _group_type='m', _event='NOK')
