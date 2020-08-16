@@ -81,3 +81,5 @@ class LogParser:
 
 log = LogParser(_log_file='registrations.txt')
 log.run()
+
+# Зачёт!

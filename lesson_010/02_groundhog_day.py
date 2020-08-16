@@ -80,3 +80,5 @@ with open('02_groundhog_day.log', 'a', encoding='UTF8') as file:
 print(f'Достиг просветления за {day-1} дней')
 
 # https://goo.gl/JnsDqu
+
+# Зачёт!
