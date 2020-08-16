@@ -90,3 +90,5 @@ new_log = LogParser(_log_file='events.txt', _group_type='mm', _event='NOK')
 new_log.run()
 new_log = LogParser(_log_file='events.txt', _group_type='yy', _event='NOK')
 new_log.run()
+
+# Зачёт!

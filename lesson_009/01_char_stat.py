@@ -107,3 +107,5 @@ text = ' по алфавиту по убыванию '
 print(f'{text:#^30}')
 new_stat.sort_order = True
 new_stat.run()
+
+# Зачёт!
