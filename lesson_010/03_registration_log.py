@@ -68,6 +68,10 @@ class LogParser:
 
     def parse_file(self):
         with open(self.log_file, 'r', encoding='UTF8') as file:
+            # TODO Каждый раз открывать файл на запись довольно ресурсозатратно.
+            #  Будет правильнее открыть все файлы до цикла.
+            #  Вы можете открыть сразу несколько файлов в одном контест менеджере.
+            #  with open('file1', 'w') as file1, open('file2', 'w') as file2:
             for line in file:
                 try:
                     _parse_line(_line=line[:-1])
