@@ -32,11 +32,6 @@ class NotEmailError(Exception):
     pass
 
 
-def _write_log(_message, _file):
-    with open(os.path.normpath(_file), 'a', encoding='UTF8') as file:
-        file.write(f'{_message}\n')
-
-
 def _parse_line(_line):
     _data = _line.split(' ')
     if len(_line) == 0 or _line.isspace():
@@ -67,24 +62,21 @@ class LogParser:
         print('All Done!')
 
     def parse_file(self):
-        with open(self.log_file, 'r', encoding='UTF8') as file:
-            # TODO Каждый раз открывать файл на запись довольно ресурсозатратно.
-            #  Будет правильнее открыть все файлы до цикла.
-            #  Вы можете открыть сразу несколько файлов в одном контест менеджере.
-            #  with open('file1', 'w') as file1, open('file2', 'w') as file2:
-            for line in file:
+        with open(self.log_file, 'r', encoding='UTF8') as _file, open(self.bad_log, 'a', encoding='UTF8') as _bad_file,\
+                open(self.good_log, 'a', encoding='UTF8') as _good_file:
+            for line in _file:
                 try:
                     _parse_line(_line=line[:-1])
                 except ValueError as exc:
-                    _write_log(_message=f'{line[:-1]:<50} - ERROR: {exc.args[0]}', _file=self.bad_log)
+                    _bad_file.write(f'{line[:-1]:<50} - ERROR: {exc.args[0]}\n')
                 except NotNameError as exc:
-                    _write_log(_message=f'{line[:-1]:<50} - ERROR: {exc.args[0]}', _file=self.bad_log)
+                    _bad_file.write(f'{line[:-1]:<50} - ERROR: {exc.args[0]}\n')
                 except NotEmailError as exc:
-                    _write_log(_message=f'{line[:-1]:<50} - ERROR: {exc.args[0]}', _file=self.bad_log)
+                    _bad_file.write(f'{line[:-1]:<50} - ERROR: {exc.args[0]}\n')
                 except IndexError as exc:
-                    _write_log(_message=f'{line[:-1]:<50} - ERROR: {exc.args[0]}', _file=self.bad_log)
+                    _bad_file.write(f'{line[:-1]:<50} - ERROR: {exc.args[0]}\n')
                 else:
-                    _write_log(_message=line[:-1], _file=self.good_log)
+                    _good_file.write(line)
 
 
 log = LogParser(_log_file='registrations.txt')
